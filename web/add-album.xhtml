@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:body>
+
+	<h:form>
+		<h:outputLabel for="titre" value="Titre : " />
+		<h:inputText id="titre" value="#{albumController.album.title}" 
+			title="Renseignez le titre de l'album"/>
+			<!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
+		<br/>
+		<h:outputLabel for="description" value="Description : " />
+		<h:inputText id="description" value="#{albumController.album.description}" 
+			title="Donnez une description de l'album"/>
+			<!-- validator="#{ajoutAlbum.validerZip}"  -->
+		<br/>
+		
+		<h:commandButton action="#{albumController.createAlbum()}" value="Créer l'album"/>
+	</h:form>
+	
+</h:body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:body>
+
+	<h:form>
+		<h:outputLabel for="email" value="Adresse email : " />
+		<h:inputText id="email" value="#{appUserController.user.email}" 
+			title="Renseignez votre email"/>
+			<!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
+		<br/>
+		<h:outputLabel for="lastname" value="Nom : " />
+		<h:inputText id="lastname" value="#{appUserController.user.lastname}" 
+			title="Donnez votre nom"/>
+			<!-- validator="#{ajoutAlbum.validerZip}"  -->
+		<br/>
+		<h:outputLabel for="firstname" value="Prénom : " />
+		<h:inputText id="firstname" value="#{appUserController.user.firstname}" 
+			title="Donnez votre prénom"/>
+			<!-- validator="#{ajoutAlbum.validerZip}"  -->
+		<br/>
+		
+		<h:inputSecret id="password" value="#{appUserController.user.password}" 
+			title="Donnez un mot de passe"/>
+			<!-- validator="#{ajoutAlbum.validerZip}"  -->
+		<br/>
+		
+		<h:commandButton action="#{appUserController.create()}" value="Créer mon compte"/>
+	</h:form>
+	
+</h:body>
+
+</html>

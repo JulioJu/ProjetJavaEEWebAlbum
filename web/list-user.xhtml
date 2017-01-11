@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view>
+<h:body>
+	
+	<h1>UserList</h1>
+
+<h:form >
+
+<h:dataTable value="#{appUserService.listUsers()}" var="user" >
+   <h:column>    				
+     <f:facet name="header">Prénom</f:facet>    				
+     <h:outputText value="#{user.firstname}"/> 
+   </h:column>
+   <h:column>
+      <f:facet name="header">Nom</f:facet>
+      <h:outputText value="#{user.lastname}"/> 
+   </h:column>
+   <h:column>
+      <f:facet name="header">E-mail</f:facet>
+      <h:outputText value="#{user.email}"/>
+   </h:column>
+   <h:column>
+      <h:commandLink action="#{appUserController.delete(user.id)}" value="delete"/>
+   </h:column>
+</h:dataTable>
+
+</h:form>	
+</h:body>
+</f:view>
+</html>

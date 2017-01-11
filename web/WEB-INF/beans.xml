@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+
+Fichier requis pour activer les beans CDI 
+(i.e. pour utiliser @Named à la place de @ManagedBean) 
+Il peut être soit completement vide, sinon il doit contenir la balise beans suivante
+
+-->
+
+<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+</beans>

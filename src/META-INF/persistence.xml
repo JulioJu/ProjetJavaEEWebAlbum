@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="EssaiJPA" transaction-type="RESOURCE_LOCAL">
+		<non-jta-data-source>albumDS</non-jta-data-source>
+		<class>fr.uga.miashs.album.model.Album</class>
+		<class>fr.uga.miashs.album.model.AppUser</class>
+		<class>fr.uga.miashs.album.model.Picture</class>
+		
+	<properties>
+		<property name="openjpa.jdbc.Schema" value="app"/>
+		<property name='openjpa.jdbc.SynchronizeMappings' value='buildSchema(ForeignKeys=true)' />
+	</properties>
+	</persistence-unit>
+
+</persistence>
