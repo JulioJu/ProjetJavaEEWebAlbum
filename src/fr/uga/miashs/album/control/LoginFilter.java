@@ -16,14 +16,16 @@ import fr.uga.miashs.album.util.Pages;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter("/faces/*")
+// @WebFilter("/faces#<{(|") // Teacher configuration
+@WebFilter("/*")
 public class LoginFilter implements Filter {
 
-	
+
 	public String[] filteredPages;
-    
+	private AppUserSession appUserSession;
+
 	/**
-     * Default constructor. 
+     * Default constructor.
      */
     public LoginFilter() {
         // TODO Auto-generated constructor stub
@@ -38,8 +40,8 @@ public class LoginFilter implements Filter {
 				Pages.list_album
 		};
 	}
-	
-	
+
+
 	/**
 	 * @see Filter#destroy()
 	 */
@@ -51,16 +53,13 @@ public class LoginFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
+
 		String requestedUri = ((HttpServletRequest) request).getRequestURI().substring(((HttpServletRequest) request).getContextPath().length()+1);
 		for (String s : filteredPages) {
 			if (s.equals(requestedUri)) {
-				 HttpSession session = ((HttpServletRequest) request).getSession(false);
-				 if (session == null || 
-						 ((AppUserSession) session.getAttribute("appUserSession")) == null ||
-								 ((AppUserSession) session.getAttribute("appUserSession")).getConnectedUser()==null) {
-					 request.getRequestDispatcher(Pages.login).forward(request, response);
-				 }
+				if(appUserSession == null || appUserSession.getConnectedUser() == null){
+					request.getRequestDispatcher(Pages.login).forward(request, response);
+				}
 			}
 		}
 
