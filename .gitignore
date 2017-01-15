@@ -2,3 +2,8 @@ lib
 out
 ProjetAlbumJu.iml
 .idea
+web/resources/css/bootstrap.css
+web/resources/css/bootstrap-theme.css
+web/resources/fonts/
+web/resources/js/bootstrap.js
+web/resources/js/jquery-3.1.1.js

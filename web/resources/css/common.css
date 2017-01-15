@@ -1,0 +1,9 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+    background-color: #eee;
+}
+
+.page-header {
+    border-bottom-color: white;
+}

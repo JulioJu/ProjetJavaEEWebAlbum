@@ -17,7 +17,7 @@
 
     <!-- ui:include src="/template/head.xhtml" -->
     <ui:include src="templates/head.xhtml" />
-    <h:outputStylesheet library="css" name="signin.css" />
+    <h:outputStylesheet library="css" name="logout.css" />
 
 </h:head>
 
@@ -34,21 +34,13 @@
 
 <div class="container" role="main" >
 
-    <!-- h:form -->
-    <h:form styleClass="form-signin">
-
-        <h2 class="form-signin-heading">Please sign in</h2>
-
-        <h:outputLabel for="inputEmail" styleClass="sr-only" value="Email address" />
-        <h:inputText id="inputEmail" styleClass="form-control" placeholder="Email address" p:required="required" p:autofocus="autofocus" title="email" value="#{appUserSession.email}" />
-        <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
-
-        <h:outputLabel for="inputPassword" styleClass="sr-only" value="Password" />
-        <h:inputSecret id="inputPassword" styleClass="form-control" p:placeholder="Password" p:required="required" value="#{appUserSession.password}" title="Password" />
-        <!-- validator="#{ajoutAlbum.validerZip}"  -->
-
-        <h:commandButton styleClass="btn btn-lg btn-primary btn-block" action="#{appUserSession.login()}" value="Sign in" />
-    </h:form>
+    <div class="jumbotron">
+        <h:form>
+            <h1>Logout page</h1>
+            <p class="lead">You are successfully logout !</p>
+            <p><h:link styleClass="btn btn-lg btn-success" outcome="/login.xhtml" role="button" value="Sign in" /></p>
+        </h:form>
+    </div>
 
 </div> <!-- /container -->
 

@@ -27,18 +27,18 @@ public class AppUserSession implements Serializable {
 
 	@Inject
 	private AppUserService appUserService;
-	
+
 	@Inject
 	private AlbumService albumService;
-	
+
 	private String email;
 	private String password;
-	
+
 	private Album currentAlbum;
 	private AppUser connectedUser;
-	
+
 	public String login() {
-		
+
 		try {
 			connectedUser = appUserService.login(email, password);
 		} catch (ServiceException e) {
@@ -50,14 +50,28 @@ public class AppUserSession implements Serializable {
 		}
 		return Pages.list_album;
 	}
-	
+
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		((HttpSession) context.getExternalContext().getSession(false)).invalidate();
 		connectedUser=null;
-		return "";
+		return Pages.logout;
 	}
-	
+
+	public String getPageIndex() {
+		if (connectedUser == null)
+			return Pages.login;
+		else
+			return this.logout();
+	}
+
+	public String loginOrLogoutString() {
+		if (connectedUser == null)
+			return "Login";
+		else
+			return "Logout";
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -73,8 +87,10 @@ public class AppUserSession implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public AppUser getConnectedUser() {
 		return connectedUser;
 	}
 }
+
+// vim: set ts=4 sw=4 noet:

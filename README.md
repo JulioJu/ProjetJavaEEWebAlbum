@@ -13,3 +13,9 @@ Une interface de recherche multi-critères (qui, quoi, quand) sera proposée.
 Un formulaire de création de compte sera disponible ainsi qu'une interface d'admin permettant d' éditer et de supprimer un compte.
 
 Au niveau de l'architecture du logiciel, il faut veiller à séparer la partie modèle, des contrôleurs (servlets) et des vues JSP). Les JSP ne contiendront si possible pas de scriptlets mais utiliseront massivement la JSTL. L'application devra être internationalisée. La persistance sera gérée par JPA et éventuellement Apache JENA TDB (pour la partie web sémantique).
+
+
+## Installation
+
+* Install bootstrap v3.x (see https://www.youtube.com/watch?v=gg7MlRGuWTQ)
+* Put jQuery in web/resources/js/

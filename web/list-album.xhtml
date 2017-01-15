@@ -1,34 +1,74 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
     >
 
 <f:view>
-    <h:body>
 
-        <h1>AlbumList</h1>
+<!-- head -->
+<!-- –––– -->
+<h:head>
+    <!-- ui:include src="/template/head.xhtml" -->
+    <ui:include src="templates/head.xhtml" />
+</h:head>
 
-        <h:form>
+<!-- h:body -->
+<!-- –––– -->
+<h:body>
 
-            <h:dataTable value="#{albumController.listAlbumOwnedByCurrentUser}" var="alb">
-                <h:column>
-                    <f:facet name="header">Titre</f:facet>
-                    <h:outputText value="#{alb.title}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Description</f:facet>
-                    <h:outputText value="#{alb.description}" />
-                </h:column>
-                <!-- <h:column> -->
-                <!--     <h:commandLink action="#{appUserController.delete(user.id)}" value="delete"/> -->
-                <!-- </h:column> -->
-            </h:dataTable>
+<!-- ui:include src="/template/header.xhtml" -->
+<!-- –––– -->
+<ui:include src="templates/header.xhtml" />
 
-        </h:form>
-    </h:body>
+<!-- main -->
+<!-- –––– -->
+
+
+<div class="container" role="main" >
+
+    <div class="col-xs-12
+            col-sm-10 col-sm-offset-1
+            col-md-8 col-md-offset-2
+            col-lg-6 col-md-offset-3
+            ">
+        <!-- title -->
+        <div class="page-header">
+            <h1>Album list</h1>
+        </div>
+            <!-- h:form -->
+            <h:form>
+                <h:dataTable styleClass="table table-condensed" value="#{albumController.listAlbumOwnedByCurrentUser}" var="alb">
+                    <h:column>
+                        <f:facet name="header">Titre</f:facet>
+                        <h:outputText value="#{alb.title}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Description</f:facet>
+                        <h:outputText value="#{alb.description}" />
+                    </h:column>
+                    <!-- <h:column> -->
+                    <!--     <h:commandLink action="#{appUserController.delete(user.id)}" value="delete"/> -->
+                    <!-- </h:column> -->
+                </h:dataTable>
+            <!-- \h:form -->
+            </h:form>
+    </div>
+</div> <!-- /container -->
+
+<!-- ui:include src="/template/footer-script.xhtml" -->
+<!-- –––– -->
+<ui:include src="templates/footer-script.xhtml" />
+
+<!-- \h:body -->
+<!-- –––– -->
+</h:body>
+
 </f:view>
 
 </html>
