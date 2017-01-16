@@ -22,30 +22,33 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li class="active">
+                            <h:link outcome="/index.xhtml" value="Home" styleClass="" />
+                        </li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <li class="dropdown-header">User</li>
+                                <li>
+                                    <h:link outcome="/list-user.xhtml" value="List user" styleClass="" />
+                                </li>
                                 <li class="active">
                                     <h:link outcome="/add-user.xhtml" value="Add user" styleClass="" />
                                 </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">Album</li>
                                 <li>
                                     <h:link outcome="/add-album.xhtml" value="Add album" styleClass="" />
                                 </li>
                                 <li>
-                                    <h:link outcome="/list-user.xhtml" value="List user" styleClass="" />
+                                    <h:link outcome="/list-album.xhtml" value="List album" styleClass="" />
                                 </li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="../navbar/">Default</a></li>
                         <li>
                             <a href="#">
                                 User

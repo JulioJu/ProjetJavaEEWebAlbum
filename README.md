@@ -19,3 +19,4 @@ Au niveau de l'architecture du logiciel, il faut veiller à séparer la partie m
 
 * Install bootstrap v3.x (see https://www.youtube.com/watch?v=gg7MlRGuWTQ)
 * Put jQuery in web/resources/js/
+* Install http://www.jasny.net/bootstrap/
