@@ -9,5 +9,7 @@ web/resources/fonts/
 web/resources/js/bootstrap.js
 web/resources/js/jquery-3.1.1.js
 web/resources/js/jasny-bootstrap.min.js
-buid
-
+build
+.settings
+.project
+.classpath

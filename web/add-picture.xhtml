@@ -40,25 +40,32 @@
             ">
         <!-- title -->
         <div class="page-header">
-            <h1>Create album</h1>
+            <h1>Add picture in album</h1>
         </div>
-            <!-- h:form -->
-            <h:form>
-                <div class="form-group">
-                    <h:outputLabel for="title" value="Title" />
-                    <h:inputText id="title" p:placeholder="Title" styleClass="form-control" p:required="required" p:autofocus="autofocus" value="#{albumController.album.title}"
-                            title="Title"/>
-                    <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
+        <!-- h:form -->
+        <h:form>
+            <div class="form-group">
+                <h:outputLabel for="title" value="Title" />
+                <h:inputText id="title" p:placeholder="Title" styleClass="form-control" p:required="required" value="#{albumController.album.title}"
+                        title="Title"/>
+                <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
+            </div>
+            <div class="form-group">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                    <div>
+                        <span class="btn btn-default btn-file">
+                            <span class="fileinput-new">Select image</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file" name="..." />
+                        </span>
+                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <h:outputLabel for="description" value="Description" />
-                    <h:inputText id="description" p:placeholder="Description" styleClass="form-control" p:required="required" value="#{albumController.album.description}"
-                            title="Description"/>
-                    <!-- validator="#{ajoutAlbum.validerZip}"  -->
-                </div>
-                <h:commandButton styleClass="btn btn-primary" action="#{albumController.createAlbum()}" value="Create album"/>
-            <!-- \h:form -->
-            </h:form>
+            </div>
+            <h:commandButton styleClass="btn btn-primary" action="#{albumController.createAlbum()}" value="Create album"/>
+        <!-- \h:form -->
+        </h:form>
     </div>
 </div> <!-- /container -->
 

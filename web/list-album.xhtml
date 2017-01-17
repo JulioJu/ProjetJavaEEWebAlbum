@@ -52,9 +52,9 @@
                         <f:facet name="header">Description</f:facet>
                         <h:outputText value="#{alb.description}" />
                     </h:column>
-                    <!-- <h:column> -->
-                    <!--     <h:commandLink action="#{appUserController.delete(user.id)}" value="delete"/> -->
-                    <!-- </h:column> -->
+                    <h:column>
+                        <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
+                    </h:column>
                 </h:dataTable>
             <!-- \h:form -->
             </h:form>
