@@ -29,6 +29,7 @@ public class AlbumController {
 	private Album album;
 
 	public Album getAlbum() {
+		// useful when launch view add-album.xhtml
 		if (album==null) {
 			album = new Album(appUserSession.getConnectedUser());
 		}
@@ -41,7 +42,7 @@ public class AlbumController {
 		String homeDir = System.getProperty("user.home");
 		Path directory = Paths.get(homeDir,"/workspace/PhotoAlbumJavaEEPictures");
 		if (!Files.isDirectory(directory)) {
-			throw new FileSystemNotFoundException(directory + "does not exist or is not a directory.");
+			throw new FileSystemNotFoundException(directory + " does not exist or is not a directory. Please create a directory named '" + directory + "'.");
 		}
 
 		try {

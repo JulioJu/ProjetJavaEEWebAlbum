@@ -45,8 +45,16 @@
         <!-- h:form -->
         <h:form>
             <div class="form-group">
+                <label for="albumId">Select album</label>
+                <h:outputLabel for="albumId" value="Choose one album" />
+                <h:selectOneMenu id="ablumId" value="#{pictureController.picture.albumId}" styleClass="form-control" >
+                    <f:selectItem itemValue="#{null}" itemLabel="-- select one --" />
+                    <f:selectItems value="#{albumController.getListAlbumOwnedByCurrentUser()}" var="alb" itemValue="#{alb.id}" itemLabel="id:#{alb.id} title:&#39;#{alb.title}&#39;" />
+                </h:selectOneMenu>
+            </div>
+            <div class="form-group">
                 <h:outputLabel for="title" value="Title" />
-                <h:inputText id="title" p:placeholder="Title" styleClass="form-control" p:required="required" value="#{albumController.album.title}"
+                <h:inputText id="title" p:placeholder="Title" styleClass="form-control" p:required="required" value="#{pictureController.picture.title}"
                         title="Title"/>
                 <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
             </div>
@@ -57,13 +65,13 @@
                         <span class="btn btn-default btn-file">
                             <span class="fileinput-new">Select image</span>
                             <span class="fileinput-exists">Change</span>
-                            <input type="file" name="..." />
+                            <h:inputText id="uriString" name="uriString" value="#{pictureController.picture.uriString}" p:type="file" p:accept="image/*" p:required="required" />
                         </span>
                         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                     </div>
                 </div>
             </div>
-            <h:commandButton styleClass="btn btn-primary" action="#{albumController.createAlbum()}" value="Create album"/>
+            <h:commandButton styleClass="btn btn-primary" action="#{pictureController.createPicture()}" value="Create picture"/>
         <!-- \h:form -->
         </h:form>
     </div>

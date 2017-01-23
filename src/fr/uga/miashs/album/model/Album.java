@@ -14,34 +14,37 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
+// @Table(uniqueConstraints=@UniqueConstraint(columnNames="title"))
 @NamedQueries({
     @NamedQuery(name="Album.findAllOwned",
                 query="SELECT a FROM Album a WHERE a.owner=:owner"),
+    @NamedQuery(name="Album.getAlbumFromId",
+                query="SELECT a FROM Album a WHERE a.id=:albumId"),
 })
 public class Album {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	@NotNull
 	private String title;
-	
+
 	private String description;
-	
+
 	@NotNull
 	@ManyToOne
 	private AppUser owner;
-	
+
 	@ManyToMany
 	private Set<AppUser> sharedWith;
-	
+
 	@OneToMany(mappedBy="album")
 	private Set<Picture> pictures;
 
-	protected Album() {
+	public Album() {
 	}
-	
+
 	public Album(AppUser owner) {
 		this.owner=owner;
 	}

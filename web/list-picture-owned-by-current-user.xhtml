@@ -39,26 +39,22 @@
             ">
         <!-- title -->
         <div class="page-header">
-            <h1>Album list</h1>
+            <h1>Picture list owned by current user</h1>
         </div>
             <!-- h:form -->
             <h:form>
-                <h:dataTable styleClass="table table-condensed" value="#{albumController.getListAlbumOwnedByCurrentUser()}" var="alb">
+                <h:dataTable styleClass="table table-condensed" value="#{pictureController.getListPictureOwnedByCurrentUser()}" var="pict">
                 <ui:remove>
                     <!-- TODO why it's albumController.listAlbumOwnedByCurrentUser ?  -->
                     <!-- <h:dataTable styleClass="table table-condensed" value="#{albumController.listAlbumOwnedByCurrentUser}" var="alb"> -->
                 </ui:remove>
                     <h:column>
                         <f:facet name="header">Identifier</f:facet>
-                        <h:outputText value="#{alb.id}" />
+                        <h:outputText value="#{pict.id}" />
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Title</f:facet>
-                        <h:outputText value="#{alb.title}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Description</f:facet>
-                        <h:outputText value="#{alb.description}" />
+                        <f:facet name="header">Album title</f:facet>
+                        <h:outputText value="#{pict.album.title}" />
                     </h:column>
                     <h:column>
                         <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
