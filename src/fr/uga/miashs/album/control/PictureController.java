@@ -30,12 +30,15 @@ public class PictureController {
         }
         return picture;
     }
-    //
-    // // TODO EntityTransaction commit method is void. But how to check than commit
-    // // was performed with success ? See JpaService.java
-    // // public String delete(long pictureId) {
-    // //
-    // // }
+
+    public String delete(long pictureId) {
+        picture = pictureService.read(pictureId);
+        if (picture == null) {
+            throw new NullPointerException("The album with id " + pictureId + " that you want to destroy not exists in database");
+        }
+        pictureService.deleteById(pictureId);
+        return Pages.list_picture;
+    }
 
     public String createPicture() {
 

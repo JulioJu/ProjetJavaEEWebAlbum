@@ -18,8 +18,6 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name="Album.findAllOwned",
                 query="SELECT a FROM Album a WHERE a.owner=:owner"),
-    @NamedQuery(name="Album.getAlbumFromId",
-                query="SELECT a FROM Album a WHERE a.id=:albumId"),
 })
 public class Album {
 
@@ -85,3 +83,5 @@ public class Album {
 		return pictures;
 	}
 }
+
+// vim: sw=4 ts=4 noet:

@@ -53,11 +53,19 @@
                         <h:outputText value="#{pict.id}" />
                     </h:column>
                     <h:column>
+                        <f:facet name="header">Album id</f:facet>
+                        <h:outputText value="#{pict.album.id}" />
+                    </h:column>
+                    <h:column>
                         <f:facet name="header">Album title</f:facet>
                         <h:outputText value="#{pict.album.title}" />
                     </h:column>
                     <h:column>
-                        <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
+                        <f:facet name="header">Picture file name</f:facet>
+                        <h:outputText value="#{pict.uri.toString()}" />
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="#{pictureController.delete(pict.id)}" value="delete"/>
                     </h:column>
                 </h:dataTable>
             <!-- \h:form -->

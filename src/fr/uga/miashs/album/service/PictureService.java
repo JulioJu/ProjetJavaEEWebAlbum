@@ -2,6 +2,7 @@ package fr.uga.miashs.album.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.Query;
 
 import fr.uga.miashs.album.model.Album;
@@ -12,18 +13,12 @@ import fr.uga.miashs.album.model.Picture;
 public class PictureService extends JpaService<Long,Picture> {
 
     private static final long serialVersionUID = 8759786961691423964L;
-
+    @Inject
+    private AlbumService albumService;
 
     public void create(Picture p) throws ServiceException {
         p.setUri(p.getUriString());
-        // => because Uri is not an Entity. Raise exception
-        // « No mapping metadata found for java.util.URI »
-        // See https://docs.jboss.org/hibernate/stable/annotations/reference/en/html/xml-overriding.html
-        // p.setUri(getEm().merge( p.getUri()));
-        Query query = getEm().createNamedQuery("Album.getAlbumFromId");
-        // idem
-        query.setParameter("albumId", Long.parseUnsignedLong(p.getAlbumId()));
-        p.setAlbum((Album)query.getSingleResult());
+        p.setAlbum(albumService.read(p.getAlbumId()));
         super.create(p);
     }
 

@@ -39,7 +39,7 @@ public class Picture {
     private AppUser owner;
 
     @Transient
-    private String albumId;
+    private long albumId;
 
     @Transient
     private String uriString;
@@ -115,11 +115,11 @@ public class Picture {
         this.owner = owner;
     }
 
-    public String getAlbumId() {
+    public Long getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(String albumId) {
+    public void setAlbumId(Long albumId) {
         this.albumId = albumId;
     }
 
