@@ -39,34 +39,31 @@
             ">
         <!-- title -->
         <div class="page-header">
-            <h1>User list</h1>
+            <h1>Album list shared</h1>
         </div>
-
             <!-- h:form -->
             <h:form>
-
-                <h:dataTable styleClass="table table-condensed" value="#{appUserService.listUsers()}" var="user">
+                <h:dataTable styleClass="table table-condensed" value="#{albumController.getListAlbumShared()}" var="alb">
+                <ui:remove>
+                    <!-- TODO why it's albumController.listAlbumOwnedByCurrentUser ?  -->
+                    <!-- <h:dataTable styleClass="table table-condensed" value="#{albumController.listAlbumOwnedByCurrentUser}" var="alb"> -->
+                </ui:remove>
                     <h:column>
-                        <f:facet name="header">User id</f:facet>
-                        <h:outputText value="#{user.id}" />
+                        <f:facet name="header">Identifier</f:facet>
+                        <h:outputText value="#{alb.id}" />
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Firstname</f:facet>
-                        <h:outputText value="#{user.firstname}" />
+                        <f:facet name="header">Title</f:facet>
+                        <h:outputText value="#{alb.title}" />
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Lastname</f:facet>
-                        <h:outputText value="#{user.lastname}" />
+                        <f:facet name="header">Description</f:facet>
+                        <h:outputText value="#{alb.description}" />
                     </h:column>
                     <h:column>
-                        <f:facet name="header">E-mail</f:facet>
-                        <h:outputText value="#{user.email}" />
-                    </h:column>
-                    <h:column>
-                        <h:commandLink action="#{appUserController.delete(user.id)}" value="delete" />
+                        <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
                     </h:column>
                 </h:dataTable>
-
             <!-- \h:form -->
             </h:form>
     </div>

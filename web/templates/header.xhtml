@@ -32,26 +32,29 @@
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">User</li>
                                 <li>
-                                    <h:link outcome="/list-user.xhtml" value="List user" styleClass="" />
+                                    <h:link outcome="#{pagesController.list_user}" value="List user" styleClass="" />
                                 </li>
                                 <li class="active">
-                                    <h:link outcome="/add-user.xhtml" value="Add user" styleClass="" />
+                                    <h:link outcome="#{pagesController.add_user}" value="Add user" styleClass="" />
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Album</li>
                                 <li>
-                                    <h:link outcome="/add-album.xhtml" value="Add album" styleClass="" />
+                                    <h:link outcome="#{pagesController.add_album}" value="Add album" styleClass="" />
                                 </li>
                                 <li>
-                                    <h:link outcome="/list-album.xhtml" value="List album" styleClass="" />
+                                    <h:link outcome="#{pagesController.list_album}" value="List album" styleClass="" />
+                                </li>
+                                <li>
+                                    <h:link outcome="#{pagesController.list_album_shared}" value="List album shared" styleClass="" />
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Pictures</li>
                                 <li>
-                                    <h:link outcome="/list-picture-owned-by-current-user.xhtml" value="List pictures" styleClass="" />
+                                    <h:link outcome="#{pagesController.add_picture}" value="Add picture" styleClass="" />
                                 </li>
                                 <li>
-                                    <h:link outcome="/add-picture.xhtml" value="Add picture" styleClass="" />
+                                    <h:link outcome="#{pagesController.list_picture}" value="List pictures" styleClass="" />
                                 </li>
                             </ul>
                         </li>

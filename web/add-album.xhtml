@@ -56,6 +56,14 @@
                             title="Description"/>
                     <!-- validator="#{ajoutAlbum.validerZip}"  -->
                 </div>
+                <div class="form-group">
+                    <label for="albumId">Select album</label>
+                    <h:outputLabel for="userId" value="Share album with" />
+                    <h:selectManyListbox id="userId" value="#{albumController.album.sharedWithArray}" styleClass="form-control" >
+                        <f:selectItem itemValue="#{null}" itemLabel="-- select one or many --" />
+                        <f:selectItems value="#{appUserService.listUsers()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" />
+                    </h:selectManyListbox>
+                </div>
                 <h:commandButton styleClass="btn btn-primary" action="#{albumController.createAlbum()}" value="Create album"/>
             <!-- \h:form -->
             </h:form>
@@ -73,3 +81,6 @@
 </f:view>
 
 </html>
+
+<!-- vim: sw=4 ts=4 et:
+-->

@@ -1,7 +1,9 @@
 package fr.uga.miashs.album.service;
 
+import java.util.HashSet;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.Query;
 
 import fr.uga.miashs.album.model.Album;
@@ -10,21 +12,16 @@ import fr.uga.miashs.album.model.AppUser;
 
 public class AlbumService extends JpaService<Long,Album> {
 
-	private int i = 0;
+	private static final long serialVersionUID = -2061392070773108977L;
+	@Inject
+	private AppUserService appUserService;
 
 	public void create(Album a) throws ServiceException {
-		// teacher version
-		// a.setOwner(getEm().merge(getEm().merge( a.getOwner())));
-		// doesn't work
-		// AppUser ownerLoc = null; a.setOwner(getEm().merge( ownerLoc ));
-		// changed by this action ?
-		System.out.println("Hello from albumService " + i + a.getOwner()); // => print reference
+		a.setSharedWith(new HashSet<AppUser>());
+		for (int i=0; i<a.getSharedWithArray().length ; i++) {
+			a.getSharedWith().add(appUserService.read(a.getSharedWithArray()[i]));
+		}
 		a.setOwner(getEm().merge( a.getOwner()));
-		// getEm().merge( a.getOwner()); // == > doesn't work, why ?
-		// Why no reference updated in penultimate line, and previous line doesn't work ?
-		i++;
-		System.out.println("Hello from albumService " + i + a.getOwner()); // => print reference
-		i++;
 		super.create(a);
 	}
 
@@ -32,6 +29,13 @@ public class AlbumService extends JpaService<Long,Album> {
 		//La requete est définie dans la classe Album grâce à une annotation
 		Query query = getEm().createNamedQuery("Album.findAllOwned");
 		query.setParameter("owner", getEm().merge(a));
+		return query.getResultList();
+	}
+
+	public List<Album> listAlbumShared(AppUser a) throws ServiceException {
+		//La requete est définie dans la classe Album grâce à une annotation
+		Query query = getEm().createNamedQuery("Album.findAllShared");
+		query.setParameter("current_user", a.getId());
 		return query.getResultList();
 	}
 

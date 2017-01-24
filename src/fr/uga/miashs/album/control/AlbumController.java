@@ -108,6 +108,17 @@ public class AlbumController {
 		}
 		return null;
 	}
+
+	public List<Album> getListAlbumShared() {
+		try {
+			return albumService.listAlbumShared(appUserSession.getConnectedUser());
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
 
 // vim: sw=4 ts=4 noet:

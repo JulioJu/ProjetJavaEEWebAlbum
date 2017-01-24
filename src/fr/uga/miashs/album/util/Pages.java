@@ -9,4 +9,7 @@ public interface Pages {
 	public final static String login = "/login.xhtml";
 	public final static String logout = "/logout";
 	public final static String list_picture = "/list-picture-owned-by-current-user.xhtml";
+	public final static String add_picture = "/add-picture";
 }
+
+// vim: sw=4 ts=4 noet:
