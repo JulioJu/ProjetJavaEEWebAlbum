@@ -9,9 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import fr.uga.miashs.album.model.Album;
 import fr.uga.miashs.album.model.AppUser;
-import fr.uga.miashs.album.service.AlbumService;
 import fr.uga.miashs.album.service.AppUserService;
 import fr.uga.miashs.album.service.ServiceException;
 import fr.uga.miashs.album.util.Pages;
@@ -25,16 +23,14 @@ import fr.uga.miashs.album.util.Pages;
 @SessionScoped
 public class AppUserSession implements Serializable {
 
-	@Inject
-	private AppUserService appUserService;
+	private static final long serialVersionUID = -1076122964728342081L;
 
 	@Inject
-	private AlbumService albumService;
+	private AppUserService appUserService;
 
 	private String email;
 	private String password;
 
-	private Album currentAlbum;
 	private AppUser connectedUser;
 
 	public String login() {
@@ -58,7 +54,21 @@ public class AppUserSession implements Serializable {
 		return Pages.logout;
 	}
 
-	public String getPageIndex() {
+	public String informationOrCreateUserString() {
+		if (connectedUser == null)
+			return "Create user";
+		else
+			return "User " + this.getConnectedUser().getFirstname() + this.getConnectedUser().getLastname()  ;
+	}
+
+	public String informationOrCreateUserPage() {
+		if (connectedUser == null)
+			return Pages.add_user;
+		else
+			return Pages.user_current_information;
+	}
+
+	public String loginOrLogoutPage() {
 		if (connectedUser == null)
 			return Pages.login;
 		else

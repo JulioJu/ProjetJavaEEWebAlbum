@@ -17,6 +17,34 @@ Au niveau de l'architecture du logiciel, il faut veiller à séparer la partie m
 
 ## Installation
 
+### js and css dependencies
 * Install bootstrap v3.x (see https://www.youtube.com/watch?v=gg7MlRGuWTQ)
 * Put jQuery in web/resources/js/
-* Install http://www.jasny.net/bootstrap/
+* Install http://www.jasny.net/bootstrap/ as below
+
+### jar dependencies
+Into your apache-tomee-jaxrx-1.7.4/lib
+* Use JSF 2.2 implementation (e.g. myfaces, jar "myfaces-api-2.2.11.jar" and "myfaces-impl-2.2.11.jar"). With TomeEE 7, delete myfaces 2.1 into your "apache-tomee-jaxrs-1.7.4/lib" directory.
+* Install Derby (only "Derby.jar")
+* Install http://showcase.omnifaces.org/ v 2.4 (with my TomeEE config, doesn't work with v 2.5, even with web.xml and context.xml and bean.xml configured as they want)
+* N.B. Derby not allow concurrent connection.
+
+### IDE
+* Eclipse specific instruction
+** Use "Dynamic Web Project", and configure it properly.
+** With Eclipse, see (Stackoverflow)[http://stackoverflow.com/questions/38594094/java-lang-nullpointerexception-at-org-omnifaces-cdi-eager-eagerbeansphaselistene]
+* IntelliJ
+** Use JSF project, do not download librairies. Add librairies in /File/ProjectStructure/lib
+** IntelliJ is better for database visualisation, but it must be configured for autobuild and autodeployment (otherwise you should restart tomee for each source modification).
+
+
+### TomEE configuration
+#### tomee.xml
+With Eclipse, in the "Server" project Directory, with IntelliJ, in apache-tomee-jaxrs-1.7.4/conf/tomee.xml, you can use this `<Resource>` in tomee.xml (respect carriage return)
+```
+<Resource id="albumDS" type="DataSource">
+    JdbcDriver org.apache.derby.jdbc.EmbeddedDriver
+    JdbcUrl jdbc:derby:/path/to/your/DB;create=true
+    JtaManaged=false
+</Resource>
+```

@@ -2,14 +2,33 @@ package fr.uga.miashs.album.util;
 
 public interface Pages {
 
-	public final static String add_album = "/add-album.xhtml";
-	public final static String list_album = "/list-album.xhtml";
-	public final static String add_user = "/add-user.xhtml";
-	public final static String list_user = "/list-user.xhtml";
-	public final static String login = "/login.xhtml";
-	public final static String logout = "/logout";
-	public final static String list_picture = "/list-picture-owned-by-current-user.xhtml";
-	public final static String add_picture = "/add-picture";
+	// For implementation of interface Filter, always add extension .xhtml, even if it isn't
+	// mandatory for jsf. Also, do not put « / ».
+
+	String add_album = "add-album.xhtml";
+	String list_album = "list-album.xhtml";
+	String add_user = "add-user.xhtml";
+	String list_user = "list-user.xhtml";
+	String login = "login.xhtml";
+	String logout = "logout.xhtml";
+	String list_picture_owned = "list-picture-owned-by-current-user.xhtml";
+	String list_album_shared = "list-album-shared.xhtml";
+	String add_picture = "add-picture.xhtml";
+	String user_current_information = "user-current-information.xhtml";
+	String user_current_edit = "user-current-edit.xhtml";
+
+	String[] FILTEREDPAGE_CONNECTED = {
+		add_album,
+		list_album,
+		list_picture_owned,
+		add_picture,
+		user_current_information,
+		user_current_edit,
+	};
+
+	String[] FILTEREDPAGE_ADMIN = {
+	};
+
 }
 
 // vim: sw=4 ts=4 noet:

@@ -37,7 +37,7 @@ public class PictureController {
             throw new NullPointerException("The album with id " + pictureId + " that you want to destroy not exists in database");
         }
         pictureService.deleteById(pictureId);
-        return Pages.list_picture;
+        return Pages.list_picture_owned;
     }
 
     public String createPicture() {
@@ -50,7 +50,7 @@ public class PictureController {
             e.printStackTrace();
         }
 
-        return Pages.list_picture;
+        return Pages.list_picture_owned;
     }
 
 

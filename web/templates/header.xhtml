@@ -4,9 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      >
+
 <body>
 <ui:composition>
+<o:importConstants type="fr.uga.miashs.album.util.Pages" />
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -32,43 +36,39 @@
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">User</li>
                                 <li>
-                                    <h:link outcome="#{pagesController.list_user}" value="List user" styleClass="" />
+                                    <h:link outcome="#{Pages.list_user}" value="List user" styleClass="" />
                                 </li>
                                 <li class="active">
-                                    <h:link outcome="#{pagesController.add_user}" value="Add user" styleClass="" />
+                                    <h:link outcome="#{Pages.add_user}" value="Add user" styleClass="" />
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Album</li>
                                 <li>
-                                    <h:link outcome="#{pagesController.add_album}" value="Add album" styleClass="" />
+                                    <h:link outcome="#{Pages.add_album}" value="Add album" styleClass="" />
                                 </li>
                                 <li>
-                                    <h:link outcome="#{pagesController.list_album}" value="List album" styleClass="" />
+                                    <h:link outcome="#{Pages.list_album}" value="List album" styleClass="" />
                                 </li>
                                 <li>
-                                    <h:link outcome="#{pagesController.list_album_shared}" value="List album shared" styleClass="" />
+                                    <h:link outcome="#{Pages.list_album_shared}" value="List album shared" styleClass="" />
                                 </li>
                                 <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Pictures</li>
-                                <li>
-                                    <h:link outcome="#{pagesController.add_picture}" value="Add picture" styleClass="" />
-                                </li>
-                                <li>
-                                    <h:link outcome="#{pagesController.list_picture}" value="List pictures" styleClass="" />
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#">
-                                User
-                                <h:outputText value="#{appUserSession.getConnectedUser().getFirstname()}" />
-                                <h:outputText value="#{appUserSession.getConnectedUser().getLastname()}" />
-                            </a>
+                                    <li class="dropdown-header">Pictures</li>
+                                    <li>
+                                        <h:link outcome="#{Pages.add_picture}" value="Add picture" styleClass="" />
+                                    </li>
+                                    <li>
+                                        <h:link outcome="#{Pages.list_picture_owned}" value="List pictures" styleClass="" />
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <h:commandLink action="#{appUserSession.informationOrCreateUserPage()}" value="#{appUserSession.informationOrCreateUserString()}" styleClass="" />
                         </li>
                         <li class="active">
-                            <h:commandLink action="#{appUserSession.getPageIndex()}" value="#{appUserSession.loginOrLogoutString()}" styleClass="" />
+                            <h:commandLink action="#{appUserSession.loginOrLogoutPage()}" value="#{appUserSession.loginOrLogoutString()}" styleClass="" />
                         </li>
                     </ul>
                 </div>

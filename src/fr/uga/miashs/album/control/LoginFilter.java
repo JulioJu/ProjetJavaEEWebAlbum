@@ -1,6 +1,8 @@
 package fr.uga.miashs.album.control;
 
 import java.io.IOException;
+
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -9,7 +11,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import fr.uga.miashs.album.util.Pages;
 
@@ -22,23 +23,20 @@ public class LoginFilter implements Filter {
 
 
 	public String[] filteredPages;
+	@Inject
 	private AppUserSession appUserSession;
 
 	/**
-     * Default constructor.
-     */
-    public LoginFilter() {
-        // TODO Auto-generated constructor stub
-    }
+	 * Default constructor.
+	 */
+	public LoginFilter() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		filteredPages = new String[] {
-				Pages.add_album,
-				Pages.list_album
-		};
 	}
 
 
@@ -55,7 +53,7 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		String requestedUri = ((HttpServletRequest) request).getRequestURI().substring(((HttpServletRequest) request).getContextPath().length()+1);
-		for (String s : filteredPages) {
+		for (String s : Pages.FILTEREDPAGE_CONNECTED) {
 			if (s.equals(requestedUri)) {
 				if(appUserSession == null || appUserSession.getConnectedUser() == null){
 					request.getRequestDispatcher(Pages.login).forward(request, response);
@@ -70,3 +68,5 @@ public class LoginFilter implements Filter {
 
 
 }
+
+// vim: sw=4 ts=4 noet:

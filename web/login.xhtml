@@ -6,6 +6,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:o="http://omnifaces.org/ui"
     >
 
 
@@ -32,6 +33,7 @@
 <!-- main -->
 <!-- –––– -->
 
+<o:importConstants type="fr.uga.miashs.album.util.Pages" />
 <div class="container" role="main" >
 
     <!-- h:form -->
@@ -50,6 +52,9 @@
         <h:commandButton styleClass="btn btn-lg btn-primary btn-block" action="#{appUserSession.login()}" value="Sign in" />
     </h:form>
 
+    <h:form styleClass="form-signin">
+        <h:link styleClass="btn btn-lg btn-success btn-block" role="button" outcome="#{Pages.add_user}" value="Create user" />
+    </h:form>
 </div> <!-- /container -->
 
 <!-- ui:include src="/template/footer-script.xhtml" -->
