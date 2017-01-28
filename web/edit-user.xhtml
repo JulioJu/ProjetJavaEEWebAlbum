@@ -6,6 +6,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
     >
 
 <f:view>
@@ -38,27 +39,40 @@
             ">
         <!-- title -->
         <div class="page-header">
-            <h1>Create your account</h1>
+            <h1>Modify
+                <h:outputText rendered="#{appUserSession.getConnectedUser().equals(appUserController.user)}" value="your"/>
+                account (id:#{appUserController.user.id})
+            </h1>
         </div>
             <!-- h:form -->
             <h:form id="formId" p:data-toggle="validator" >
                 <div class="form-group">
-                    <h:outputLabel for="email" value="Email" />
-                    <h:inputText p:type="email" id="email" p:placeholder="Email" styleClass="form-control" p:required="required" p:autofocus="autofocus" value="#{appUserController.user.email}"
+                    <!-- @TODO Email (duplicate not allowed, action no perform if you enter same email as other account : no warning) -->
+                    <h:outputLabel p:type="email" for="email" value="Email (duplicate not allowed, action no perform if you enter same email as other account : no warning)" />
+                    <h:inputText id="email" styleClass="form-control" p:required="required" p:autofocus="autofocus" value="#{appUserController.user.email}"
                             title="email" />
                     <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="firstname" value="Firstname" />
-                    <h:inputText id="firstname" p:placeholder="Firstname" styleClass="form-control" p:required="required" value="#{appUserController.user.firstname}"
+                    <h:inputText id="firstname" styleClass="form-control" p:required="required" value="#{appUserController.user.firstname}"
                             title="Firstname" />
                     <!-- validator="#{ajoutAlbum.validerZip}"  -->
                     <div class="help-block with-errors"></div>
                 </div>
+                <c:if test="#{appUserSession.getConnectedUser().isAdmin()}">
+                    <div class="form-group">
+                        <h:outputLabel for="admin" value="Admin" />
+                        <h:inputText id="admin" styleClass="form-control" p:required="required" value="#{appUserController.user.admin}"
+                                title="admin"/>
+                        <!-- validator="#{ajoutAlbum.validerZip}"  -->
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </c:if>
                 <div class="form-group">
                     <h:outputLabel for="lastname" value="Lastname" />
-                    <h:inputText id="lastname" p:placeholder="Name" styleClass="form-control" p:required="required" value="#{appUserController.user.lastname}"
+                    <h:inputText id="lastname" styleClass="form-control" p:required="required" value="#{appUserController.user.lastname}"
                             title="name"/>
                     <!-- validator="#{ajoutAlbum.validerZip}"  -->
                     <div class="help-block with-errors"></div>
@@ -74,11 +88,10 @@
                     http://stackoverflow.com/questions/8634156/how-to-find-out-client-id-of-component-for-ajax-update-render-cannot-find-compo -->
                 <div class="form-group">
                     <h:outputLabel for="inputPasswordConfirm" value="Confirm password" />
-                    <h:inputSecret type="password" styleClass="form-control" id="inputPasswordConfirm" p:data-match="#formId\:password" p:data-match-error="Whoops, these don't match" p:required="required" p:placeholder="Confirm password" />
+                    <h:inputSecret type="password" styleClass="form-control" id="inputPasswordConfirm" p:data-match="#formId\:password" p:data-match-error="Whoops, these don't match" placeholder="Confirm" p:required="required" p:placeholder="Confirm password" />
                     <div class="help-block with-errors"></div>
                 </div>
-
-                <h:commandButton styleClass="btn btn-primary" action="#{appUserController.create()}" value="Create your account"/>
+                <h:commandButton styleClass="btn btn-primary" action="#{appUserController.edit()}" value="Perform modifications"/>
             </h:form>
     </div>
 </div> <!-- /container -->
@@ -95,3 +108,7 @@
 </f:view>
 
 </html>
+
+<!-- vim: sw=4 ts=4 et:
+-->
+

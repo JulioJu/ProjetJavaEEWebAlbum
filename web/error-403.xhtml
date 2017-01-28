@@ -1,19 +1,15 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?> -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-    >
+>
 
 
 <f:view>
-
-<f:metadata>
-    <f:viewAction action="#{appUserSession.logout()}" />
-</f:metadata>
 
 <!-- head -->
 <!-- –––– -->
@@ -21,7 +17,7 @@
 
     <!-- ui:include src="/template/head.xhtml" -->
     <ui:include src="templates/head.xhtml" />
-    <h:outputStylesheet library="css" name="logout.css" />
+    <h:outputStylesheet library="css" name="signin.css" />
 
 </h:head>
 
@@ -35,17 +31,13 @@
 
 <!-- main -->
 <!-- –––– -->
-
 <div class="container" role="main" >
-
     <div class="jumbotron">
-        <h:form>
-            <h1>Logout page</h1>
-            <p class="lead">You are successfully logout !</p>
-            <p><h:link styleClass="btn btn-lg btn-success" outcome="/login.xhtml" role="button" value="Sign in" /></p>
-        </h:form>
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            Error 403: forbidden
+        </div>
     </div>
-
 </div> <!-- /container -->
 
 <!-- ui:include src="/template/footer-script.xhtml" -->
@@ -59,6 +51,5 @@
 </f:view>
 
 </html>
-
 <!-- vim: sw=4 ts=4 et:
 -->

@@ -4,9 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:o="http://omnifaces.org/ui"
     >
 
 <f:view>
@@ -30,6 +30,7 @@
 <!-- –––– -->
 
 
+<o:importConstants type="fr.uga.miashs.album.util.Pages" />
 <div class="container" role="main" >
 
     <div class="col-xs-12
@@ -67,6 +68,12 @@
                 </h:dataTable>
             <!-- \h:form -->
             </h:form>
+            <div class="form-signin">
+                <h:commandButton styleClass="btn btn-lg btn-success btn-block" action="#{appUserController.editUserPage(appUserSession.getConnectedUser().id)}" value="Edit your account" />
+            </div>
+            <div class="form-signin">
+                <h:commandButton styleClass="btn btn-lg btn-warning btn-block" action="#{appUserController.delete(appUserSession.getConnectedUser().id)}" value="Delte your account" />
+            </div>
     </div>
 </div> <!-- /container -->
 

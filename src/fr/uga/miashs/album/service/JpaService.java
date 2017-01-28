@@ -14,61 +14,79 @@ import javax.persistence.PersistenceUnit;;
 
 
 /*
- * On a choisi ApplicationScoped car une seule instance de chque service suffit à l'application
+ * On a choisi ApplicationScoped car une seule instance de chaque service suffit à l'application
  * Ce choix de reporte sur toute les sous classes
  * Si on ne met rien @RequestScoped est choisi par défaut
+ * ==> @TODO say to teacher : wrong :
+ * https://docs.oracle.com/javaee/7/tutorial/cdi-basic008.htm
+ * Default scope is Dependent
  */
 @ApplicationScoped
 public abstract class JpaService<K,V> implements GenericService<K,V>, Serializable {
 
+	private static final long serialVersionUID = -4220123326848708491L;
+
 	private Class<V> cls;
-	
+
 	@PersistenceUnit( unitName = "EssaiJPA" )
 	private EntityManagerFactory emf;
-	
+
 	private static EntityManager em=null;
-	
+
 	public JpaService() {
 		cls= (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
 	}
-	
+
 	@PostConstruct
 	public void init () {
 		em = emf.createEntityManager();
 	}
-	
+
 	@PreDestroy
 	public void close() {
 		em.close();
 	}
-	
+
 	protected EntityManager getEm() {
 		return em;
 	}
-	
+
+	@Override
 	public void create(V v) throws ServiceException {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		em.persist(v);	
+		em.persist(v);
 		t.commit();
 	}
-	
-	public V read(K id) {
+
+	@Override
+	public void edit(V v) throws ServiceException {
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		// em.persist(v);
+		t.commit();
+	}
+
+	@Override
+	public V read(K id) throws ServiceException {
 		return em.find(cls, id);
 	}
-	
-	public V update(V v) {
+
+	@Override
+	public V update(V v) throws ServiceException {
 		return em.merge(v);
 	}
-	
-	public void delete(V v) {
+
+	@Override
+	public void delete(V v) throws ServiceException {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
 		em.remove(v);
 		t.commit();
 	}
-	
-	public void deleteById(K id) {
+
+	@Override
+	public void deleteById(K id) throws ServiceException {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
 		// getReference (contrairement à find) permet de charger seulement l'id
@@ -77,3 +95,5 @@ public abstract class JpaService<K,V> implements GenericService<K,V>, Serializab
 		t.commit();
 	}
 }
+
+// vim: sw=4 ts=4 noet:

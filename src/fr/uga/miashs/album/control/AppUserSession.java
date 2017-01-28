@@ -34,7 +34,6 @@ public class AppUserSession implements Serializable {
 	private AppUser connectedUser;
 
 	public String login() {
-
 		try {
 			connectedUser = appUserService.login(email, password);
 		} catch (ServiceException e) {
@@ -47,39 +46,10 @@ public class AppUserSession implements Serializable {
 		return Pages.list_album;
 	}
 
-	public String logout() {
+	public void logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		((HttpSession) context.getExternalContext().getSession(false)).invalidate();
 		connectedUser=null;
-		return Pages.logout;
-	}
-
-	public String informationOrCreateUserString() {
-		if (connectedUser == null)
-			return "Create user";
-		else
-			return "User " + this.getConnectedUser().getFirstname() + this.getConnectedUser().getLastname()  ;
-	}
-
-	public String informationOrCreateUserPage() {
-		if (connectedUser == null)
-			return Pages.add_user;
-		else
-			return Pages.user_current_information;
-	}
-
-	public String loginOrLogoutPage() {
-		if (connectedUser == null)
-			return Pages.login;
-		else
-			return this.logout();
-	}
-
-	public String loginOrLogoutString() {
-		if (connectedUser == null)
-			return "Login";
-		else
-			return "Logout";
 	}
 
 	public String getEmail() {

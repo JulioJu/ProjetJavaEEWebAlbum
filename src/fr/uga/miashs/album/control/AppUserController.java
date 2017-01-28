@@ -1,7 +1,5 @@
 package fr.uga.miashs.album.control;
 
-import java.io.Serializable;
-
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -24,25 +22,26 @@ import fr.uga.miashs.album.util.Pages;
  */
 @Named
 @RequestScoped
-public class AppUserController implements Serializable {
-
-	private static final long serialVersionUID = 885308383214967823L;
+public class AppUserController {
 
 	@Inject
 	private AppUserService appUserService;
+	@Inject
+	private AppUserSession appUserSession;
 
 	private AppUser user;
 
-	public AppUserController() {
-		user = new AppUser();
-	}
-
 	public AppUser getUser() {
+		if (user == null)
+			user = new AppUser();
 		return user;
 	}
 
-	public void setUser(AppUser user) {
-		this.user = user;
+	private boolean isAllowedModify() {
+		if (appUserSession.getConnectedUser().isAdmin()
+				|| appUserSession.getConnectedUser().equals(user))
+			return true;
+		return false;
 	}
 
 	public String create() {
@@ -55,14 +54,55 @@ public class AppUserController implements Serializable {
 			facesContext.addMessage("email", facesMessage);
 			return null;
 		}
-
 		return Pages.list_user;
+	}
 
+	public String edit() {
+		AppUser userTmp = user;
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		String idString = (String) ctx.getExternalContext().
+				getRequestParameterMap().get("id");
+		Long userIdRetrieveFromView = Long.valueOf(idString);
+		try {
+			user = appUserService.read(userIdRetrieveFromView);
+		} catch (ServiceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (!this.isAllowedModify())
+			return Pages.error_403;
+		user.setFirstname(userTmp.getFirstname());
+		user.setLastname(userTmp.getLastname());
+		try {
+			appUserService.edit(user);
+		} catch (ServiceException e) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			FacesMessage facesMessage = new FacesMessage(e.getLocalizedMessage());
+			facesContext.addMessage("email", facesMessage);
+			return null;
+		}
+		return Pages.list_user;
+	}
+
+	public String editUserPage(Long userIdRetrieveFromView) {
+		try {
+			this.user = appUserService.read(userIdRetrieveFromView);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Pages.edit_user;
 	}
 
 	public String delete(long userId) {
-		appUserService.deleteById(userId);
-
+		try {
+			appUserService.deleteById(userId);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!this.isAllowedModify())
+			return Pages.error_403;
 		return Pages.list_user;
 	}
 

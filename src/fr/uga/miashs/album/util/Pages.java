@@ -14,19 +14,19 @@ public interface Pages {
 	String list_picture_owned = "list-picture-owned-by-current-user.xhtml";
 	String list_album_shared = "list-album-shared.xhtml";
 	String add_picture = "add-picture.xhtml";
-	String user_current_information = "user-current-information.xhtml";
-	String user_current_edit = "user-current-edit.xhtml";
+	String information_current_user = "information-current-user.xhtml";
+	String edit_user = "edit-user.xhtml";
+	String edit_album = "edit-album.xhtml";
+	String error_403 = "error-403.xhtml";
 
 	String[] FILTEREDPAGE_CONNECTED = {
 		add_album,
 		list_album,
 		list_picture_owned,
 		add_picture,
-		user_current_information,
-		user_current_edit,
-	};
-
-	String[] FILTEREDPAGE_ADMIN = {
+		information_current_user,
+        edit_user,
+		edit_album,
 	};
 
 }

@@ -1,5 +1,6 @@
 package fr.uga.miashs.album.model;
 
+import java.util.Calendar;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -44,11 +47,14 @@ public class Album {
 	@Transient
 	private Long[] sharedWithArray;
 
+	@Transient
+	private Long[] removeSharedWithArray;
+
 	@OneToMany(mappedBy="album")
 	private Set<Picture> pictures;
 
-	public Album() {
-	}
+	@Temporal(TemporalType.TIME)
+	private Calendar dateCreated;
 
 	public Album(AppUser owner) {
 		this.owner=owner;
@@ -98,9 +104,26 @@ public class Album {
 		this.sharedWithArray = sharedWithArray;
 	}
 
+	public Long[] getRemoveSharedWithArray() {
+		return removeSharedWithArray;
+	}
+
+	public void setRemoveSharedWithArray(Long[] removeSharedWithArray) {
+		this.removeSharedWithArray = removeSharedWithArray;
+	}
+
 	public Set<Picture> getPictures() {
 		return pictures;
 	}
+
+	public Calendar getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated() {
+		this.dateCreated = Calendar.getInstance();
+	}
+
 }
 
 // vim: sw=4 ts=4 noet:

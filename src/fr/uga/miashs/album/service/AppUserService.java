@@ -15,9 +15,12 @@ import fr.uga.miashs.album.model.AppUser;
 @ApplicationScoped
 public class AppUserService extends JpaService<Long,AppUser> {
 
+	private static final long serialVersionUID = 3975934852005119859L;
+
 	@Override
 	public void create(AppUser v) throws ServiceException {
 		try {
+			v.setDateCreated();
 			super.create(v);
 		}
 		catch (RollbackException e) {
@@ -27,9 +30,14 @@ public class AppUserService extends JpaService<Long,AppUser> {
 			else {
 				new ServiceException(e);
 			}
-			//System.out.println("coucou");
 		}
 	}
+
+	@Override
+	public void edit(AppUser v) throws ServiceException {
+		this.create(v);
+	}
+
 
 	public AppUser login(String email, String password) throws ServiceException {
 		Query query = getEm().createNamedQuery("AppUser.login");
@@ -42,9 +50,11 @@ public class AppUserService extends JpaService<Long,AppUser> {
 			throw new ServiceException("Utilisateur Inconnu",e);
 		}
 	}
-	
-	public List<AppUser> listUsers() {
+
+	public List<AppUser> listUsers() throws ServiceException {
 		 Query query = getEm().createNamedQuery("AppUser.findAll");
 		 return query.getResultList();
 	}
 }
+
+// vim: sw=4 ts=4 noet:

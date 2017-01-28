@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
     >
@@ -66,8 +65,25 @@
                         <f:facet name="header">Admin</f:facet>
                         <h:outputText value="#{user.admin}" />
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">Creation time</f:facet>
+                        <h:outputText value="#{user.dateCreated.getTime()}" />
+                    </h:column>
+                    <h:column rendered="#{appUserSession.getConnectedUser().equals(user)}" >
+                        <h:commandLink action="#{appUserController.editUserPage(appUserSession.getConnectedUser().id)}" value="Edit your own account" />
+                    </h:column>
+                    <h:column rendered="#{appUserSession.getConnectedUser().isAdmin()
+                            and not appUserSession.getConnectedUser().equals(user)}" >
+                        <h:commandLink action="#{appUserController.editUserPage(user.id)}" value="Edit this account" />
+                    </h:column>
+                    <h:column rendered="#{appUserSession.getConnectedUser().equals(user)}" >
+                        <h:commandLink action="#{appUserController.delete(appUserSession.getConnectedUser().id)}" value="Delete your own account" />
+                    </h:column>
+                    <h:column rendered="#{appUserSession.getConnectedUser().isAdmin()
+                            and not appUserSession.getConnectedUser().equals(user)}" >
+                        <h:commandLink action="#{appUserController.delete(user.id)}" value="Delete this account" />
+                    </h:column>
                 </h:dataTable>
-
             <!-- \h:form -->
             </h:form>
     </div>

@@ -2,6 +2,7 @@ package fr.uga.miashs.album.model;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -34,6 +37,9 @@ public class Picture {
 
     @NotNull
     private URI uri;
+
+    @Temporal(TemporalType.TIME)
+    private Calendar dateCreated;
 
     @Transient
     private AppUser owner;
@@ -107,6 +113,10 @@ public class Picture {
         }
     }
 
+    public Calendar getDateCreated() {
+        return dateCreated;
+    }
+
     public AppUser getOwner() {
         return owner;
     }
@@ -133,6 +143,10 @@ public class Picture {
 
     public void setOwner() {
         this.owner = album.getOwner();
+    }
+
+    public void setDateCreated() {
+        this.dateCreated = Calendar.getInstance();
     }
 
 }

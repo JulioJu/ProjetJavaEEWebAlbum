@@ -31,12 +31,31 @@ public class PictureController {
         return picture;
     }
 
+    private boolean isAllowedModify() {
+        if (appUserSession.getConnectedUser().isAdmin()
+                || picture.getOwner().equals(appUserSession.getConnectedUser()))
+            return true;
+        return false;
+    }
+
     public String delete(long pictureId) {
-        picture = pictureService.read(pictureId);
+        try {
+            picture = pictureService.read(pictureId);
+        } catch (ServiceException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         if (picture == null) {
             throw new NullPointerException("The album with id " + pictureId + " that you want to destroy not exists in database");
         }
-        pictureService.deleteById(pictureId);
+        if (this.isAllowedModify())
+            return Pages.error_403;
+        try {
+            pictureService.deleteById(pictureId);
+        } catch (ServiceException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return Pages.list_picture_owned;
     }
 

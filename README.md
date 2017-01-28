@@ -10,15 +10,16 @@ L'utilisateur pourra annoter les photos de ses albums (i.e. ceux qu'il a créé)
 
 Une interface de recherche multi-critères (qui, quoi, quand) sera proposée.
 
-Un formulaire de création de compte sera disponible ainsi qu'une interface d'admin permettant d' éditer et de supprimer un compte.
+Un formulaire de création de compte sera disponible ainsi qu'une interface d'admin permettant d'éditer et de supprimer un compte.
 
-Au niveau de l'architecture du logiciel, il faut veiller à séparer la partie modèle, des contrôleurs (servlets) et des vues JSP). Les JSP ne contiendront si possible pas de scriptlets mais utiliseront massivement la JSTL. L'application devra être internationalisée. La persistance sera gérée par JPA et éventuellement Apache JENA TDB (pour la partie web sémantique).
+Au niveau de l'architecture du logiciel, il faut veiller à séparer la partie modèle, des contrôleurs (servlets) et des vues Facelets). L'application devra être internationalisée. La persistance sera gérée par JPA et éventuellement Apache JENA TDB (pour la partie web sémantique).
 
 
 ## Installation
 
 ### js and css dependencies
-* Install bootstrap v3.x (see https://www.youtube.com/watch?v=gg7MlRGuWTQ)
+* Install bootstrap v3.x (in bootstrap.css, perform this remplacment :
+        http://stackoverflow.com/questions/22129467/java-server-faces-with-custom-font-defined-in-css
 * Put jQuery in web/resources/js/
 * Install http://www.jasny.net/bootstrap/ as below
 
@@ -48,3 +49,18 @@ With Eclipse, in the "Server" project Directory, with IntelliJ, in apache-tomee-
     JtaManaged=false
 </Resource>
 ```
+
+### Use Interface to resolve page name:
+
+In an Facelet page, check you have
+```
+<html
+    (…)
+    xmlns:o="http://omnifaces.org/ui"
+>
+(…)
+<o:importConstants type="fr.uga.miashs.album.util.Pages" />
+```
+
+<!-- vim: sw=4 ts=4 et:
+-->

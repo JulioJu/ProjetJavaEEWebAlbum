@@ -16,7 +16,9 @@ public class PictureService extends JpaService<Long,Picture> {
     @Inject
     private AlbumService albumService;
 
+    @Override
     public void create(Picture p) throws ServiceException {
+        p.setDateCreated();
         p.setUri(p.getUriString());
         p.setAlbum(albumService.read(p.getAlbumId()));
         super.create(p);

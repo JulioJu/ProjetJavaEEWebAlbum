@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
     >
@@ -25,7 +24,6 @@
 <!-- ui:include src="/template/header.xhtml" -->
 <!-- –––– -->
 <ui:include src="templates/header.xhtml" />
-<h:outputStylesheet library="css" name="jasny-bootstrap.min.css" />
 
 <!-- main -->
 <!-- –––– -->
@@ -57,11 +55,10 @@
                     <!-- validator="#{ajoutAlbum.validerZip}"  -->
                 </div>
                 <div class="form-group">
-                    <label for="albumId">Select album</label>
-                    <h:outputLabel for="userId" value="Share album with" />
+                    <h:outputLabel for="userId" value="Share album with:" />
                     <h:selectManyListbox id="userId" value="#{albumController.album.sharedWithArray}" styleClass="form-control" >
                         <f:selectItem itemValue="#{null}" itemLabel="-- select one or many --" />
-                        <f:selectItems value="#{appUserService.listUsers()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" />
+                        <f:selectItems value="#{appUserService.listUsers()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
                     </h:selectManyListbox>
                 </div>
                 <h:commandButton styleClass="btn btn-primary" action="#{albumController.createAlbum()}" value="Create album"/>
@@ -73,7 +70,6 @@
 <!-- ui:include src="/template/footer-script.xhtml" -->
 <!-- –––– -->
 <ui:include src="templates/footer-script.xhtml" />
-<h:outputScript name="jasny-bootstrap.min.js"  library="js" />
 <!-- \h:body -->
 <!-- –––– -->
 </h:body>

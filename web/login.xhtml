@@ -42,7 +42,7 @@
         <h2 class="form-signin-heading">Please sign in</h2>
 
         <h:outputLabel for="inputEmail" styleClass="sr-only" value="Email address" />
-        <h:inputText id="inputEmail" styleClass="form-control" placeholder="Email address" p:required="required" p:autofocus="autofocus" title="email" value="#{appUserSession.email}" />
+        <h:inputText p:type="email" id="inputEmail" styleClass="form-control" placeholder="Email address" p:required="required" p:autofocus="autofocus" title="email" value="#{appUserSession.email}" />
         <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
 
         <h:outputLabel for="inputPassword" styleClass="sr-only" value="Password" />
@@ -52,9 +52,9 @@
         <h:commandButton styleClass="btn btn-lg btn-primary btn-block" action="#{appUserSession.login()}" value="Sign in" />
     </h:form>
 
-    <h:form styleClass="form-signin">
+    <div class="form-signin">
         <h:link styleClass="btn btn-lg btn-success btn-block" role="button" outcome="#{Pages.add_user}" value="Create user" />
-    </h:form>
+    </div>
 </div> <!-- /container -->
 
 <!-- ui:include src="/template/footer-script.xhtml" -->

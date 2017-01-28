@@ -11,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import fr.uga.miashs.album.util.Pages;
 
@@ -50,13 +51,18 @@ public class LoginFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+	public void doFilter(ServletRequest request, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		String requestedUri = ((HttpServletRequest) request).getRequestURI().substring(((HttpServletRequest) request).getContextPath().length()+1);
-		for (String s : Pages.FILTEREDPAGE_CONNECTED) {
-			if (s.equals(requestedUri)) {
-				if(appUserSession == null || appUserSession.getConnectedUser() == null){
-					request.getRequestDispatcher(Pages.login).forward(request, response);
+  		HttpServletResponse response = (HttpServletResponse) res;
+		if (requestedUri.equals(Pages.error_403)) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+		}
+		else {
+			for (String s : Pages.FILTEREDPAGE_CONNECTED) {
+				if (s.equals(requestedUri)) {
+					if(appUserSession == null || appUserSession.getConnectedUser() == null){
+						request.getRequestDispatcher(Pages.login).forward(request, response);
+					}
 				}
 			}
 		}
@@ -64,8 +70,6 @@ public class LoginFilter implements Filter {
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}
-
-
 
 }
 
