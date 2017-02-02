@@ -12,6 +12,7 @@
 <!-- head -->
 <!-- –––– -->
 <f:metadata>
+<f:event type="preRenderView" listener="#{albumController.initConversation()}"/>
 <f:viewParam name="album"
         value="#{albumController.album}"
         converter="src.fr.miashs.album.control.AlbumConvertor"
@@ -70,12 +71,10 @@
                     <h:outputLabel for="addShareWith" value="Add share with user:" />
                     <h:selectManyListbox id="addShareWith" value="#{albumController.album.sharedWithArray}" styleClass="form-control" >
                         <f:selectItem itemValue="#{null}" itemLabel="- - select one or many - -" />
-                        <f:selectItems value="#{albumController.getNoSharedWith(param['album'])}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
+                        <f:selectItems value="#{albumController.getNoSharedWith()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
                     </h:selectManyListbox>
                 </div>
-                <h:commandButton styleClass="btn btn-primary" action="#{albumController.editAlbum()}" value="Edit album" >
-                    <f:param name="id" value="#{albumController.album.id}" />
-                </h:commandButton>
+                <h:commandButton styleClass="btn btn-primary" action="#{albumController.editAlbum()}" value="Edit album" />
             <!-- \h:form -->
             </h:form>
     </div>

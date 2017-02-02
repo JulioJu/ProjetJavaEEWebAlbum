@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,15 +23,33 @@ import fr.uga.miashs.album.service.ServiceException;
 import fr.uga.miashs.album.util.Pages;
 
 @Named
-@RequestScoped
+@ConversationScoped
+// In Album.java, @Inject AppUserService appUserService doesn't work, I don't know why
+// In edit-album.xhtml, in list "Add share with user", when one is selected, in a view appeare
+// "xx:noSharedWithArray: Validation Error: Value is not valid"
 // See http://stackoverflow.com/questions/9069379/validation-error-value-is-not-valid
+
+// In Facelet, immediate=true attribute cause a NullPointerException (objects are destroyed)
+// In command button, pass them as <f:param…> no resolve this problem
+// With <h:link…>, methode is executed before page loading.
+
 // An other scope cause error when submit form in edit_album.xhtml
-// @ViewScoped doesn't work with cdi Bean
+// @ViewScoped doesn't work with cdi Bean. I've tried with Omnifaces @ViewScoped, but crash tomee.
 // Some persons say @ConversationScoped it's not good
 // http://stackoverflow.com/questions/6419442/cdi-weld-how-to-handle-browser-page-refresh-after-ending-conversation
-// I've also tried to put Set<AppUser>noSharedWithArray in album model many hours,
+
+// For fix it, I've also tried to put Set<AppUser>noSharedWithArray in album model many hours,
 // but it raise a NullPointerException on login, with method "appUserService.listUser()"
-// In Album.java, @Inject AppUserService appUserService doesn't work, I don't know why
+
+// When append ?cid=[number], raise error with Java EE.
+// This parameter is add when we leave a page with long-running conversation (conversation.bigin())
+// without end conversation (conversation.end()).
+// Fix this issue with http://www.programcreek.com/java-api-examples/index.php?source_dir=primefaces-starter-master/primefaces-webapp/src/main/java/com/mycompany/lifecycle/ConversationExceptionFilter.java
+// See also http://www.programcreek.com/java-api-examples/index.php?api=javax.enterprise.context.NonexistentConversationException
+// Works only in Production mode (configure it in web.xml)
+// Line 100 of ConversationExceptionFilter.java, same thing with NonexistentConversationException
+// Maybe try http://www.programcreek.com/java-api-examples/index.php?source_dir=seam-booking-ogm-master/src/main/java/org/jboss/seam/examples/booking/exceptioncontrol/ConversationExceptionHandler.java with Jboss
+
 public class AlbumController implements Serializable {
 
 	private static final long serialVersionUID = 2729195466703888571L;
@@ -41,8 +59,28 @@ public class AlbumController implements Serializable {
 	private AlbumService albumService;
 	@Inject
 	private AppUserService appUserService;
+	@Inject
+	private Conversation conversation;
 
 	private Album album;
+
+	public Conversation getConversation() {
+		return conversation;
+	}
+
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
+	}
+
+	public void initConversation(){
+		conversation.begin();
+	}
+
+	public String endConversation(){
+		conversation.end();
+		// Mandotory, otherwise append "?cid=[nubmer]"
+		return "?faces-redirect=true";
+	}
 
 	public Album getAlbum() {
 		// useful when launch view add-album.xhtml
@@ -102,38 +140,18 @@ public class AlbumController implements Serializable {
 		return Pages.list_album;
 	}
 
-	// TODO check if it's a valid album, and who is the owner
 	public String editAlbum() {
-		Album albumTmp = album;
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		String idString = (String) ctx.getExternalContext().
-				getRequestParameterMap().get("id");
-		Long albumIdRetrieveFromView = Long.valueOf(idString);
-		System.out.println(albumIdRetrieveFromView);
-		try {
-			album = albumService.read(albumIdRetrieveFromView);
-		} catch (ServiceException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		if (!this.isAllowedModify())
 			return Pages.error_403;
-		album.setTitle(albumTmp.getTitle());
-		album.setDescription(albumTmp.getDescription());
-		album.setSharedWithArray(albumTmp.getSharedWithArray());
-		album.setNoSharedWithArray(albumTmp.getNoSharedWithArray());
 		try {
 			albumService.edit(album);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return Pages.list_album;
+		return Pages.list_album + this.endConversation();
 	}
 
-	// TODO EntityTransaction commit method is void. But how to check than commit
-	// was performed with success ? See JpaService.java
 	public String delete(long albumId) {
 
 		try {
@@ -196,30 +214,16 @@ public class AlbumController implements Serializable {
 		return null;
 	}
 
-	// Todo fix it
-	public Set<AppUser> getNoSharedWith(String albumId){
-		System.out.println("'" + albumId + "' hi from AlbumController");
-		System.out.println("Generate : \" xx:noSharedWithArray: Validation Error: Value is not valid");
-		if (albumId != ""){
-			long albumIdLong = Long.valueOf(albumId);
-			try {
-				albumService.read(albumIdLong);
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Set<AppUser> userList = new HashSet<AppUser>();
-			try {
-				userList = new HashSet<AppUser>(appUserService.listUsers());
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (album.getSharedWith() != null)
-				userList.removeAll(album.getSharedWith());
-			return userList;
+	public Set<AppUser> getNoSharedWith(){
+		Set<AppUser> userList = new HashSet<AppUser>();
+		try {
+			userList = new HashSet<AppUser>(appUserService.listUsers());
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return new HashSet<AppUser>();
+		userList.removeAll(album.getSharedWith());
+		return userList;
 	}
 
 }

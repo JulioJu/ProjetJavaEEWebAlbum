@@ -62,5 +62,11 @@ In an Facelet page, check you have
 <o:importConstants type="fr.uga.miashs.album.util.Pages" />
 ```
 
+### ConversationExceptionFilter
+
+ConversationExceptionFilter works only in Production mode (see web.xml)
+Maybe try http://www.programcreek.com/java-api-examples/index.php?source_dir=seam-booking-ogm-master/src/main/java/org/jboss/seam/examples/booking/exceptioncontrol/ConversationExceptionHandler.java with Jboss
+See also comments in AlbumController.java
+
 <!-- vim: sw=4 ts=4 et:
 -->
