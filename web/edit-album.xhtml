@@ -9,11 +9,14 @@
     >
 
 <f:view>
-<f:metadata>
-    <f:event type="preRenderView" listener="#{albumController.initConversation()}"/>
-</f:metadata>
 <!-- head -->
 <!-- –––– -->
+<f:metadata>
+<f:viewParam name="album"
+        value="#{albumController.album}"
+        converter="src.fr.miashs.album.control.AlbumConvertor"
+        required="true" requiredMessage="Invalid page access. Please use a link from within the system."/>
+</f:metadata>
 <h:head>
     <!-- ui:include src="/template/head.xhtml" -->
     <ui:include src="templates/head.xhtml" />
@@ -56,28 +59,23 @@
                             title="Description"/>
                     <!-- validator="#{ajoutAlbum.validerZip}"  -->
                 </div>
-                <!-- <div class="form-group"> -->
-                <!--     <h:outputLabel for="deleteShareWith" value="Delete share with user:" /> -->
-                <!--     <h:selectManyListbox id="deleteShareWith" value="#{albumController.album.removeSharedWithArray}" styleClass="form-control" > -->
-                <!--         <f:selectItem itemValue="#{null}" itemLabel="- - select one or many - -" /> -->
-                <!--         <f:selectItems value="#{albumController.album.getSharedWith()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" /> -->
-                <!--     </h:selectManyListbox> -->
-                <!-- </div> -->
                 <div class="form-group">
-                    <h:outputLabel for="removeSharedWithArray" value="Delete share with user:" />
-                    <h:selectManyListbox id="removeSharedWithArray" value="#{albumController.album.removeSharedWithArray}" styleClass="form-control" >
+                    <h:outputLabel for="noSharedWithArray" value="Delete share with user:" />
+                    <h:selectManyListbox id="noSharedWithArray" value="#{albumController.album.noSharedWithArray}" styleClass="form-control" >
                         <f:selectItem itemValue="#{null}" itemLabel="- - select one or many - -" />
-                        <f:selectItems value="#{albumController.getListUserShared()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
+                        <f:selectItems value="#{albumController.album.getSharedWith()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
                     </h:selectManyListbox>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="addShareWith" value="Add share with user:" />
                     <h:selectManyListbox id="addShareWith" value="#{albumController.album.sharedWithArray}" styleClass="form-control" >
                         <f:selectItem itemValue="#{null}" itemLabel="- - select one or many - -" />
-                        <f:selectItems value="#{albumController.getListUserNoShared()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
+                        <f:selectItems value="#{albumController.getNoSharedWith(param['album'])}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
                     </h:selectManyListbox>
                 </div>
-                <h:commandButton styleClass="btn btn-primary" action="#{albumController.editAlbum()}" value="Edit album" />
+                <h:commandButton styleClass="btn btn-primary" action="#{albumController.editAlbum()}" value="Edit album" >
+                    <f:param name="id" value="#{albumController.album.id}" />
+                </h:commandButton>
             <!-- \h:form -->
             </h:form>
     </div>

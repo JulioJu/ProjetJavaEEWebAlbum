@@ -68,12 +68,14 @@
                 </h:dataTable>
             <!-- \h:form -->
             </h:form>
-            <div class="form-signin">
-                <h:commandButton styleClass="btn btn-lg btn-success btn-block" action="#{appUserController.editUserPage(appUserSession.getConnectedUser().id)}" value="Edit your account" />
-            </div>
-            <div class="form-signin">
-                <h:commandButton styleClass="btn btn-lg btn-warning btn-block" action="#{appUserController.delete(appUserSession.getConnectedUser().id)}" value="Delte your account" />
-            </div>
+            <h:form>
+                <div class="form-signin">
+                    <h:commandButton styleClass="btn btn-lg btn-success btn-block" action="#{appUserController.editUserPage(appUserSession.getConnectedUser().id)}" value="Edit your account" />
+                </div>
+                <div class="form-signin">
+                    <h:commandButton styleClass="btn btn-lg btn-warning btn-block" action="#{appUserController.delete(appUserSession.getConnectedUser().id)}" value="Delte your account" />
+                </div>
+            </h:form>
     </div>
 </div> <!-- /container -->
 
@@ -88,3 +90,6 @@
 </f:view>
 
 </html>
+
+<!-- vim: sw=4 ts=4 et:
+-->

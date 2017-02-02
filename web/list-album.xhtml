@@ -73,7 +73,9 @@
                         </h:selectManyListbox>
                     </h:column>
                     <h:column>
-                        <h:commandLink action="#{albumController.editAlbumPage(alb.id)}" value="edit"/>
+                        <h:link outcome="#{Pages.edit_album}" value="edit" >
+                            <f:param name="album" value="#{alb.id}" />
+                        </h:link>
                     </h:column>
                     <h:column>
                         <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
@@ -98,3 +100,5 @@
 </f:view>
 
 </html>
+<!-- vim: sw=4 ts=4 et:
+-->

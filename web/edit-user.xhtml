@@ -78,20 +78,21 @@
                     <div class="help-block with-errors"></div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel for="password" value="Password" />
-                    <h:inputSecret type="password" id="password" p:placeholder="Password" styleClass="form-control" p:required="required" value="#{appUserController.user.password}"
-                            title="Password"/>
+                    <h:outputLabel for="password" value="Change password" />
+                    <h:inputSecret type="password" id="password" p:placeholder="Change password" styleClass="form-control" value="#{appUserController.user.password}" />
                     <!-- <div class="help-block">Minimum of 6 characters</div> -->
                     <div class="help-block with-errors"></div>
                 </div>
                 <!-- See
                     http://stackoverflow.com/questions/8634156/how-to-find-out-client-id-of-component-for-ajax-update-render-cannot-find-compo -->
                 <div class="form-group">
-                    <h:outputLabel for="inputPasswordConfirm" value="Confirm password" />
-                    <h:inputSecret type="password" styleClass="form-control" id="inputPasswordConfirm" p:data-match="#formId\:password" p:data-match-error="Whoops, these don't match" placeholder="Confirm" p:required="required" p:placeholder="Confirm password" />
+                    <h:outputLabel for="inputPasswordConfirm" value="Confirm password changed" />
+                    <h:inputSecret type="password" styleClass="form-control" id="inputPasswordConfirm" p:data-match="#formId\:password" p:data-match-error="Whoops, these don't match" placeholder="Confirm" p:placeholder="Confirm password changed" />
                     <div class="help-block with-errors"></div>
                 </div>
-                <h:commandButton styleClass="btn btn-primary" action="#{appUserController.edit()}" value="Perform modifications"/>
+                <h:commandButton styleClass="btn btn-primary" action="#{appUserController.edit()}" value="Perform modifications" >
+                    <f:param name="id" value="#{appUserController.user.id}" />
+                </h:commandButton>
             </h:form>
     </div>
 </div> <!-- /container -->

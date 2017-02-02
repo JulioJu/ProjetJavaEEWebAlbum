@@ -110,9 +110,14 @@ public class AppUser {
 	}
 
 	public void setAdmin(boolean admin) {
-		if (!appUserSession.getConnectedUser().isAdmin())
+		if (appUserSession != null
+				&& appUserSession.getConnectedUser() != null
+				&& !appUserSession.getConnectedUser().isAdmin()) {
 			throw new SecurityException("An unauthorized user have tried to grant his privileges");
-		this.admin = admin;
+		}
+		else if (appUserSession != null
+				&& appUserSession.getConnectedUser() != null)
+			this.admin = admin;
 	}
 
 	public Calendar getDateCreated() {

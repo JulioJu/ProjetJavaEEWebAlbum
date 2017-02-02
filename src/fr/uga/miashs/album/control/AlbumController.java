@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,15 +23,18 @@ import fr.uga.miashs.album.service.ServiceException;
 import fr.uga.miashs.album.util.Pages;
 
 @Named
-@ConversationScoped
+@RequestScoped
 // See http://stackoverflow.com/questions/9069379/validation-error-value-is-not-valid
 // An other scope cause error when submit form in edit_album.xhtml
 // @ViewScoped doesn't work with cdi Bean
+// Some persons say @ConversationScoped it's not good
+// http://stackoverflow.com/questions/6419442/cdi-weld-how-to-handle-browser-page-refresh-after-ending-conversation
+// I've also tried to put Set<AppUser>noSharedWithArray in album model many hours,
+// but it raise a NullPointerException on login, with method "appUserService.listUser()"
+// In Album.java, @Inject AppUserService appUserService doesn't work, I don't know why
 public class AlbumController implements Serializable {
 
 	private static final long serialVersionUID = 2729195466703888571L;
-	@Inject
-	private Conversation conversation;
 	@Inject
 	private AppUserSession appUserSession;
 	@Inject
@@ -41,41 +44,19 @@ public class AlbumController implements Serializable {
 
 	private Album album;
 
-	/**
-	 * @return the conversation
-	 */
-	public Conversation getConversation() {
-		return conversation;
-	}
-
-	/**
-	 * @param conversation the conversation to set
-	 */
-	public void setConversation(Conversation conversation) {
-		this.conversation = conversation;
-	}
-
-	public void initConversation(){
-		if (
-				conversation.isTransient()) {
-			System.out.println("Plop");
-			conversation.begin();
-				}
-	}
-
-	public String endConversation(){
-		if(!conversation.isTransient()){
-			conversation.end();
-		}
-		return "?faces-redirect=true";
-	}
-
 	public Album getAlbum() {
 		// useful when launch view add-album.xhtml
 		if (album==null) {
 			album = new Album(appUserSession.getConnectedUser());
 		}
 		return album;
+	}
+
+	/**
+	 * @param album the album to set
+	 */
+	public void setAlbum(Album album) {
+		this.album = album;
 	}
 
 	private boolean isAllowedModify() {
@@ -118,28 +99,37 @@ public class AlbumController implements Serializable {
 			e.printStackTrace();
 		}
 
-		return Pages.list_album + this.endConversation();
+		return Pages.list_album;
 	}
 
 	// TODO check if it's a valid album, and who is the owner
 	public String editAlbum() {
+		Album albumTmp = album;
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		String idString = (String) ctx.getExternalContext().
+				getRequestParameterMap().get("id");
+		Long albumIdRetrieveFromView = Long.valueOf(idString);
+		System.out.println(albumIdRetrieveFromView);
+		try {
+			album = albumService.read(albumIdRetrieveFromView);
+		} catch (ServiceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (!this.isAllowedModify())
+			return Pages.error_403;
+		album.setTitle(albumTmp.getTitle());
+		album.setDescription(albumTmp.getDescription());
+		album.setSharedWithArray(albumTmp.getSharedWithArray());
+		album.setNoSharedWithArray(albumTmp.getNoSharedWithArray());
 		try {
 			albumService.edit(album);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return Pages.list_album;
-	}
 
-	public String editAlbumPage(Long albumIdRetrieveFromView) {
-		try {
-			this.album = albumService.read(albumIdRetrieveFromView);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return Pages.edit_album;
+		return Pages.list_album;
 	}
 
 	// TODO EntityTransaction commit method is void. But how to check than commit
@@ -206,22 +196,30 @@ public class AlbumController implements Serializable {
 		return null;
 	}
 
-	public Set<AppUser> getListUserShared() {
-		// problem, this class is call many times, with album==null, even if we pass Long id as parameter and resolv it with album.service(id)
-		return album.getSharedWith();
-	}
-
-	public Set<AppUser> getListUserNoShared() {
-		Set<AppUser> userList = new HashSet<AppUser>();
-		try {
-			userList = new HashSet<AppUser>(appUserService.listUsers());
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	// Todo fix it
+	public Set<AppUser> getNoSharedWith(String albumId){
+		System.out.println("'" + albumId + "' hi from AlbumController");
+		System.out.println("Generate : \" xx:noSharedWithArray: Validation Error: Value is not valid");
+		if (albumId != ""){
+			long albumIdLong = Long.valueOf(albumId);
+			try {
+				albumService.read(albumIdLong);
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Set<AppUser> userList = new HashSet<AppUser>();
+			try {
+				userList = new HashSet<AppUser>(appUserService.listUsers());
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (album.getSharedWith() != null)
+				userList.removeAll(album.getSharedWith());
+			return userList;
 		}
-		if (album.getSharedWith() != null)
-			userList.removeAll(album.getSharedWith());
-		return userList;
+		return new HashSet<AppUser>();
 	}
 
 }

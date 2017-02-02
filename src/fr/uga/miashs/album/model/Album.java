@@ -48,7 +48,7 @@ public class Album {
 	private Long[] sharedWithArray;
 
 	@Transient
-	private Long[] removeSharedWithArray;
+	private Long[] noSharedWithArray;
 
 	@OneToMany(mappedBy="album")
 	private Set<Picture> pictures;
@@ -104,12 +104,12 @@ public class Album {
 		this.sharedWithArray = sharedWithArray;
 	}
 
-	public Long[] getRemoveSharedWithArray() {
-		return removeSharedWithArray;
+	public Long[] getNoSharedWithArray() {
+		return noSharedWithArray;
 	}
 
-	public void setRemoveSharedWithArray(Long[] removeSharedWithArray) {
-		this.removeSharedWithArray = removeSharedWithArray;
+	public void setNoSharedWithArray(Long[] noSharedWithArray) {
+		this.noSharedWithArray = noSharedWithArray;
 	}
 
 	public Set<Picture> getPictures() {

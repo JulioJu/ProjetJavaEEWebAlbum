@@ -40,8 +40,8 @@ public class AlbumService extends JpaService<Long,Album> {
 			if (!user.equals(appUserSession.getConnectedUser()))
 				a.getSharedWith().add(user);
 		}
-		for (int i=0; i<a.getRemoveSharedWithArray().length ; i++){
-			AppUser user = appUserService.read(a.getRemoveSharedWithArray()[i]);
+		for (int i=0; i<a.getNoSharedWithArray().length ; i++){
+			AppUser user = appUserService.read(a.getNoSharedWithArray()[i]);
 			a.getSharedWith().remove(user);
 		}
 		super.edit(a);
