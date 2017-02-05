@@ -1,5 +1,6 @@
 package fr.uga.miashs.album.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
 
@@ -26,7 +27,9 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name="Album.findAllShared",
 				query="SELECT a FROM Album a join a.sharedWith s WHERE s.id=:current_user"),
 })
-public class Album {
+public class Album implements Serializable {
+
+	private static final long serialVersionUID = 48489996319161129L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,17 +47,17 @@ public class Album {
 	@ManyToMany
 	private Set<AppUser> sharedWith;
 
-	@Transient
-	private Long[] sharedWithArray;
-
-	@Transient
-	private Long[] noSharedWithArray;
-
 	@OneToMany(mappedBy="album")
 	private Set<Picture> pictures;
 
 	@Temporal(TemporalType.TIME)
 	private Calendar dateCreated;
+
+	@Transient
+	private Long[] sharedWithArray;
+
+	@Transient
+	private Long[] noSharedWithArray;
 
 	public Album(AppUser owner) {
 		this.owner=owner;

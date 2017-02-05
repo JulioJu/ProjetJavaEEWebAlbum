@@ -1,20 +1,23 @@
 package fr.uga.miashs.album.model;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.servlet.http.Part;
 import javax.validation.constraints.NotNull;
+
+import fr.uga.miashs.album.service.ServiceException;
 
 @Entity
 @NamedQueries({
@@ -23,7 +26,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name="Picture.findAllFromOneAlbum",
                 query="SELECT p FROM Picture p WHERE p.album=:album"),
 })
-public class Picture {
+public class Picture implements Serializable {
+
+    private static final long serialVersionUID = 7546332103904404129L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,11 +40,14 @@ public class Picture {
     @NotNull
     private String title;
 
-    @NotNull
-    private URI uri;
-
     @Temporal(TemporalType.TIME)
     private Calendar dateCreated;
+
+    @Lob
+    @NotNull
+    private byte[] file;
+
+    private String contentType;
 
     @Transient
     private AppUser owner;
@@ -48,7 +56,7 @@ public class Picture {
     private long albumId;
 
     @Transient
-    private String uriString;
+    private Part part;
 
     public Picture() {
         // For when server bind to database
@@ -89,32 +97,30 @@ public class Picture {
         this.title = title;
     }
 
-    public URI getUri() {
-        return uri;
-    }
-
-    public void setUri(URI uri) {
-        try {
-            this.uri = new URI(uri.toString());
-
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public void setUri(String uriString) {
-        try {
-            this.uri = new URI("file://", this.getAlbumId() + "/" + this.getUriString(), "");
-
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
     public Calendar getDateCreated() {
         return dateCreated;
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) throws ServiceException {
+        // if Files.size < 0.9 MB
+        // By Default MySql restrict file > 1MB
+        // http://www.codejava.net/coding/upload-files-to-database-servlet-jsp-mysql
+        if (file.length > 900000) {
+            throw new ServiceException("Not allowed to save file > 1MB in Database");
+        }
+        this.file = file;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public AppUser getOwner() {
@@ -129,16 +135,16 @@ public class Picture {
         return albumId;
     }
 
+    public Part getPart() {
+        return part;
+    }
+
+    public void setPart(Part part) {
+        this.part = part;
+    }
+
     public void setAlbumId(Long albumId) {
         this.albumId = albumId;
-    }
-
-    public String getUriString() {
-        return uriString;
-    }
-
-    public void setUriString(String fileString) {
-        this.uriString = fileString;
     }
 
     public void setOwner() {

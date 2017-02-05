@@ -18,6 +18,7 @@ public interface Pages {
 	String edit_user = "edit-user.xhtml";
 	String edit_album = "edit-album.xhtml";
 	String error_403 = "error-403.xhtml";
+	String error_404 = "error-404.xhtml";
 
 	String[] FILTEREDPAGE_CONNECTED = {
 		add_album,

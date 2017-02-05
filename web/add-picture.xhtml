@@ -42,7 +42,7 @@
             <h1>Add picture in album</h1>
         </div>
         <!-- h:form -->
-        <h:form>
+        <h:form enctype="multipart/form-data">
             <div class="form-group">
                 <label for="albumId">Select album</label>
                 <h:outputLabel for="albumId" value="Choose one album" />
@@ -64,7 +64,7 @@
                         <span class="btn btn-default btn-file">
                             <span class="fileinput-new">Select image</span>
                             <span class="fileinput-exists">Change</span>
-                            <h:inputText id="uriString" name="uriString" value="#{pictureController.picture.uriString}" p:type="file" p:accept="image/*" p:required="required" />
+                            <h:inputFile id="uriString" name="uriString" value="#{pictureController.picture.part}" p:type="file" p:accept="image/*" p:required="required" />
                         </span>
                         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                     </div>

@@ -17,10 +17,8 @@ public class PictureController {
 
     @Inject
     private AppUserSession appUserSession;
-
     @Inject
     private PictureService pictureService;
-
     private Picture picture;
 
     public Picture getPicture() {
@@ -60,18 +58,14 @@ public class PictureController {
     }
 
     public String createPicture() {
-
-        // TODO a folder named ~/workspace/PhotoAlbumJavaEEPictures should be created
         try {
             pictureService.create(picture);
         } catch (ServiceException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return Pages.list_picture_owned;
     }
-
 
     public List<Picture> getListPictureOwnedByCurrentUser() {
         try {

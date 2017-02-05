@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+
+<f:view>
+
+<!-- head -->
+<!-- –––– -->
+<h:head>
+
+    <!-- ui:include src="/template/head.xhtml" -->
+    <ui:include src="templates/head.xhtml" />
+    <h:outputStylesheet library="css" name="signin.css" />
+
+</h:head>
+
+<!-- h:body -->
+<!-- –––– -->
+<h:body>
+
+<!-- ui:include src="/template/header.xhtml" -->
+<!-- –––– -->
+<ui:include src="templates/header.xhtml" />
+
+<!-- main -->
+<!-- –––– -->
+<div class="container" role="main" >
+    <div class="jumbotron">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            Error 404: Not found.
+            <p id="picturesFolder">
+                <h:outputText rendered="#{appUserSession == null ||
+                        appuUserSession.getConnectedUser()==null}"
+                        value="You cannot access to folder pictures ('&#47;pictures')
+                        without being connected" />
+                <h:outputText rendered="#{appUserSession != null
+                        &amp;&amp; appuUserSession.getConnectedUser()!=null
+                    }" value="You're in folder '&#47;pictures',
+                    either the picture doesn't exist,
+                    either owner havn't shared this picture with you." />
+            </p>
+        </div>
+    </div>
+</div> <!-- /container -->
+
+<!-- ui:include src="/template/footer-script.xhtml" -->
+<!-- –––– -->
+<h:outputScript name="error-404.js" library="js" />
+<ui:include src="templates/footer-script.xhtml" />
+
+<!-- \h:body -->
+<!-- –––– -->
+</h:body>
+
+</f:view>
+
+</html>
+<!-- vim: sw=4 ts=4 et:
+-->

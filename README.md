@@ -1,6 +1,6 @@
-From http://imss-www.upmf-grenoble.fr/~davidjer/javaee/Projet2015.odt
-
 # Projet Java EE
+
+From http://imss-www.upmf-grenoble.fr/~davidjer/javaee/Projet2015.odt
 
 Le but du projet est de créer une application de gestion d'albums photos et d'annotation des photos.
 
@@ -64,9 +64,20 @@ In an Facelet page, check you have
 
 ### ConversationExceptionFilter
 
-ConversationExceptionFilter works only in Production mode (see web.xml)
-Maybe try http://www.programcreek.com/java-api-examples/index.php?source_dir=seam-booking-ogm-master/src/main/java/org/jboss/seam/examples/booking/exceptioncontrol/ConversationExceptionHandler.java with Jboss
-See also comments in AlbumController.java
+ConversationExceptionFilter works only in Production mode (see web.xml).
+
+Maybe try http://www.programcreek.com/java-api-examples/index.php?source_dir=seam-booking-ogm-master/src/main/java/org/jboss/seam/examples/booking/exceptioncontrol/ConversationExceptionHandler.java with Jboss.
+
+See also comments in AlbumController.java.
+
+### Contextual access denied error page for pictures
+
+See informations in FilterPage.java
+
+## TODO
+Inform exceptions in Facelet view
+
+Manage JpaService.read(key) issues (key not found in database)
 
 <!-- vim: sw=4 ts=4 et:
 -->

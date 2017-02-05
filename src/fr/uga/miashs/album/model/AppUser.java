@@ -1,5 +1,6 @@
 package fr.uga.miashs.album.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
@@ -29,7 +30,9 @@ import fr.uga.miashs.album.control.AppUserSession;
 	query="SELECT u FROM AppUser u WHERE u.email=:email AND u.password=:password")
 })
 @Table(uniqueConstraints=@UniqueConstraint(columnNames="email"))
-public class AppUser {
+public class AppUser implements Serializable {
+
+	private static final long serialVersionUID = 6859900262663311670L;
 
 	@Inject
 	private AppUserSession appUserSession;

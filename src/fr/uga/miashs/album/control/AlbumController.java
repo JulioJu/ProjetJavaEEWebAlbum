@@ -1,11 +1,6 @@
 package fr.uga.miashs.album.control;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.FileSystemNotFoundException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -105,38 +100,14 @@ public class AlbumController implements Serializable {
 	}
 
 	public String createAlbum() {
-
-		// TODO a folder named ~/workspace/PhotoAlbumJavaEEPictures should be created
-		String homeDir = System.getProperty("user.home");
-		Path directory = Paths.get(homeDir,"/workspace/PhotoAlbumJavaEEPictures");
-		if (!Files.isDirectory(directory)) {
-			throw new FileSystemNotFoundException(directory + " does not exist or is not a directory. Please create a directory named '" + directory + "'.");
-		}
-
+		if (!this.isAllowedModify())
+			return Pages.error_403;
 		try {
 			albumService.create(album);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		Path albumDirectory = Paths.get(directory + "/" + album.getId());
-		if (Files.exists(albumDirectory)) {
-			try {
-				albumService.deleteById(album.getId());
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			throw new FileSystemNotFoundException("Please delete '" + albumDirectory + "'. No action performed");
-		}
-		try {
-			Files.createDirectory(albumDirectory);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		return Pages.list_album;
 	}
 
@@ -153,7 +124,6 @@ public class AlbumController implements Serializable {
 	}
 
 	public String delete(long albumId) {
-
 		try {
 			album = albumService.read(albumId);
 		} catch (ServiceException e) {
@@ -161,36 +131,17 @@ public class AlbumController implements Serializable {
 			e.printStackTrace();
 		}
 		if (album == null) {
+			// TODO : give message
 			throw new NullPointerException("The album with id " + albumId + " that you want to destroy not exists in database");
 		}
-
 		if (!isAllowedModify())
 			return Pages.error_403;
-
 		try {
 			albumService.deleteById(albumId);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// TODO a folder named ~/workspace/PhotoAlbumJavaEEPictures should be created
-		String homeDir = System.getProperty("user.home");
-		Path directory = Paths.get(homeDir,"/workspace/PhotoAlbumJavaEEPictures");
-		if (!Files.isDirectory(directory)) {
-			throw new FileSystemNotFoundException("Root diretory '" + directory + "does not exist or is not a directory.");
-		}
-		Path albumDirectory = Paths.get(directory + "/" + album.getId());
-		if (!Files.isDirectory(albumDirectory)) {
-			throw new FileSystemNotFoundException("'" + albumDirectory + "' is not a directory. Fatal error.");
-		}
-		try {
-			Files.delete(albumDirectory);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
 		return Pages.list_album;
 	}
 

@@ -6,6 +6,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:o="http://omnifaces.org/ui"
     >
 
 <f:view>
@@ -15,6 +16,8 @@
 <h:head>
     <!-- ui:include src="/template/head.xhtml" -->
     <ui:include src="templates/head.xhtml" />
+    <h:outputStylesheet library="css" name="list_picture.css" />
+    <h:outputScript name="list-picture.js" library="js" />
 </h:head>
 
 <!-- h:body -->
@@ -29,6 +32,7 @@
 <!-- –––– -->
 
 
+<o:importConstants type="fr.uga.miashs.album.util.Pages" />
 <div class="container" role="main" >
 
     <div class="col-xs-12
@@ -41,34 +45,53 @@
             <h1>Picture list owned by current user</h1>
         </div>
             <!-- h:form -->
-            <h:form>
-                <h:dataTable styleClass="table table-condensed" value="#{pictureController.getListPictureOwnedByCurrentUser()}" var="pict">
-                    <h:column>
-                        <f:facet name="header">Identifier</f:facet>
-                        <h:outputText value="#{pict.id}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Album id</f:facet>
-                        <h:outputText value="#{pict.album.id}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Album title</f:facet>
-                        <h:outputText value="#{pict.album.title}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Picture file name</f:facet>
-                        <h:outputText value="#{pict.uri.toString()}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Creation time</f:facet>
-                        <h:outputText value="#{pict.uri.dateCreated.getTime()}" />
-                    </h:column>
-                    <h:column>
-                        <h:commandLink action="#{pictureController.delete(pict.id)}" value="delete"/>
-                    </h:column>
-                </h:dataTable>
+            <h:form id="formId">
+                <table class="table">
+                    <tr>
+                        <th>Title </th>
+                        <th>Identifier </th>
+                        <th>Album id </th>
+                        <th>Album title </th>
+                        <th>Creation time </th>
+                        <th>Content type </th>
+                        <th>File </th>
+                    </tr>
+                    <ui:repeat value="#{pictureController.getListPictureOwnedByCurrentUser()}" var="pict" id="tableId" varStatus="varStatus" >
+                            <tr>
+                                <td><h:outputText value="#{pict.title}" /></td>
+                                <td><h:outputText value="#{pict.id}" /></td>
+                                <td><h:outputText value="#{pict.album.id}" /></td>
+                                <td><h:outputText value="#{pict.album.title}" /></td>
+                                <td><h:outputText value="#{pict.dateCreated.getTime()}" /></td>
+                                <td><h:outputText value="#{pict.getContentType()}" /></td>
+                                <td>
+                                    <h:graphicImage id="thumbId" value="/pictures/#{pict.id}" alt="#{pict.title}" height="32" width="32" styleClass="thumbnail" />
+                                    <div id="#{pict.id}:modal" class="modal">
+                                        <span id="#{pict.id}:closeId" class="close" onclick="document.getElementById('#{pict.id}:modal').style.display='none'">×</span>
+                                        <h:graphicImage id="modalImg" styleClass="modal-content" />
+                                        <div id="#{pict.id}:captionId" class="caption" ></div>
+                                    </div>
+                                    <script type="text/javascript" charset="utf-8">
+                                        modalImage(
+                                            <h:outputText value="
+                                                '#{pict.id}:modal',
+                                                'formId:tableId:#{varStatus.index}:thumbId',
+                                                'formId:tableId:#{varStatus.index}:modalImg',
+                                                '#{pict.id}:captionId',
+                                                '#{pict.id}:closeId'
+                                                " />
+                                        );
+                                    </script>
+                                </td>
+                                <td> <h:commandLink action="#{pictureController.delete(pict.id)}" value="delete"/> </td>
+                            </tr>
+                    </ui:repeat>
+                </table>
             <!-- \h:form -->
             </h:form>
+            <div class="form-signin">
+                <h:link styleClass="btn btn-lg btn-success btn-block" role="button" outcome="#{Pages.add_picture}" value="Create picture" />
+            </div>
     </div>
 </div> <!-- /container -->
 
@@ -83,3 +106,6 @@
 </f:view>
 
 </html>
+
+<!-- vim: sw=4 ts=4 et:
+-->
