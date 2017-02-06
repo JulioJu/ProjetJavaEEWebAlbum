@@ -21,6 +21,10 @@ function modalImage(modalId, thumbId, modalImgId, captionId, closeId) {
     span.onclick = function() {
     modal.style.display = "none";
     }
+
+    modal.onclick = function() {
+    modal.style.display = "none";
+    }
 }
 
 // vim: sw=4 ts=4 noet:

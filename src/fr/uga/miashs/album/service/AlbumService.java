@@ -19,27 +19,27 @@ public class AlbumService extends JpaService<Long,Album> {
 	@Inject
 	private AppUserSession appUserSession;
 
-	@Override
-	public void create(Album a) throws ServiceException {
-		a.setSharedWith(new HashSet<AppUser>());
-		a.setDateCreated();
+	private void setSharedWithField(Album a) throws ServiceException {
 		if (a.getSharedWithArray() != null)
 			for (int i=0; i<a.getSharedWithArray().length ; i++) {
 				AppUser user = appUserService.read(a.getSharedWithArray()[i]);
 				if (!user.equals(appUserSession.getConnectedUser()))
 					a.getSharedWith().add(user);
 			}
+	}
+
+	@Override
+	public void create(Album a) throws ServiceException {
+		a.setSharedWith(new HashSet<AppUser>());
+		this.setSharedWithField(a);
 		a.setOwner(getEm().merge( a.getOwner()));
+		a.setDateCreated();
 		super.create(a);
 	}
 
 	@Override
 	public void edit(Album a) throws ServiceException {
-		for (int i=0; i<a.getSharedWithArray().length ; i++) {
-			AppUser user = appUserService.read(a.getSharedWithArray()[i]);
-			if (!user.equals(appUserSession.getConnectedUser()))
-				a.getSharedWith().add(user);
-		}
+		this.setSharedWithField(a);
 		for (int i=0; i<a.getNoSharedWithArray().length ; i++){
 			AppUser user = appUserService.read(a.getNoSharedWithArray()[i]);
 			a.getSharedWith().remove(user);

@@ -74,7 +74,7 @@
                         <f:selectItems value="#{albumController.getNoSharedWith()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
                     </h:selectManyListbox>
                 </div>
-                <h:commandButton styleClass="btn btn-primary" action="#{albumController.editAlbum()}" value="Edit album" />
+                <h:commandButton styleClass="btn btn-primary" action="#{albumController.edit()}" value="Edit album" />
             <!-- \h:form -->
             </h:form>
     </div>

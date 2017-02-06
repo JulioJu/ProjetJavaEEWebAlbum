@@ -99,7 +99,7 @@ public class AlbumController implements Serializable {
 		return false;
 	}
 
-	public String createAlbum() {
+	public String create() {
 		if (!this.isAllowedModify())
 			return Pages.error_403;
 		try {
@@ -111,7 +111,7 @@ public class AlbumController implements Serializable {
 		return Pages.list_album;
 	}
 
-	public String editAlbum() {
+	public String edit() {
 		if (!this.isAllowedModify())
 			return Pages.error_403;
 		try {

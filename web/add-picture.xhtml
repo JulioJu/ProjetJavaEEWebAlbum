@@ -44,9 +44,8 @@
         <!-- h:form -->
         <h:form enctype="multipart/form-data">
             <div class="form-group">
-                <label for="albumId">Select album</label>
                 <h:outputLabel for="albumId" value="Choose one album" />
-                <h:selectOneMenu id="ablumId" value="#{pictureController.picture.albumId}" styleClass="form-control" >
+                <h:selectOneMenu id="ablumId" value="#{pictureController.picture.albumId}" styleClass="form-control" p:required="required" >
                     <f:selectItem itemValue="#{null}" itemLabel="-- select one --" />
                     <f:selectItems value="#{albumController.getListAlbumOwnedByCurrentUser()}" var="alb" itemValue="#{alb.id}" itemLabel="id:#{alb.id} title:&#39;#{alb.title}&#39;" />
                 </h:selectOneMenu>
@@ -70,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <h:commandButton styleClass="btn btn-primary" action="#{pictureController.createPicture()}" value="Create picture"/>
+            <h:commandButton styleClass="btn btn-primary" action="#{pictureController.create()}" value="Create picture"/>
         <!-- \h:form -->
         </h:form>
     </div>

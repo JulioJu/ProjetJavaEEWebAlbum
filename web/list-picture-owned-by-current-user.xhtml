@@ -83,6 +83,9 @@
                                         );
                                     </script>
                                 </td>
+                                <td>
+                                    <h:commandLink action="#{pictureController.viewEditPage(pict.id)}" value="edit" />
+                                </td>
                                 <td> <h:commandLink action="#{pictureController.delete(pict.id)}" value="delete"/> </td>
                             </tr>
                     </ui:repeat>

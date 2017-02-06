@@ -40,6 +40,7 @@ public class Picture implements Serializable {
     @NotNull
     private String title;
 
+    @NotNull
     @Temporal(TemporalType.TIME)
     private Calendar dateCreated;
 
@@ -50,23 +51,10 @@ public class Picture implements Serializable {
     private String contentType;
 
     @Transient
-    private AppUser owner;
-
-    @Transient
     private long albumId;
 
     @Transient
     private Part part;
-
-    public Picture() {
-        // For when server bind to database
-        if (album != null)
-            this.setOwner(album.getOwner());
-    }
-
-    public Picture(AppUser owner) {
-        this.owner=owner;
-    }
 
     public long getId() {
         return id;
@@ -123,15 +111,9 @@ public class Picture implements Serializable {
         this.contentType = contentType;
     }
 
-    public AppUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(AppUser owner) {
-        this.owner = owner;
-    }
-
     public Long getAlbumId() {
+        if (album!=null)
+            this.albumId = this.album.getId();
         return albumId;
     }
 
@@ -145,10 +127,6 @@ public class Picture implements Serializable {
 
     public void setAlbumId(Long albumId) {
         this.albumId = albumId;
-    }
-
-    public void setOwner() {
-        this.owner = album.getOwner();
     }
 
     public void setDateCreated() {

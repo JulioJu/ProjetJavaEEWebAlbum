@@ -61,10 +61,11 @@ public abstract class JpaService<K,V> implements GenericService<K,V>, Serializab
 
 	@Override
 	public void edit(V v) throws ServiceException {
-		EntityTransaction t = em.getTransaction();
-		t.begin();
-		// em.persist(v);
-		t.commit();
+		// EntityTransaction t = em.getTransaction();
+		// t.begin();
+		// // em.persist(v);
+		// t.commit();
+		this.create(v);
 	}
 
 	@Override

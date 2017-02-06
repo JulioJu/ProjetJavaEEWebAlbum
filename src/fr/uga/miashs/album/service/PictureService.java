@@ -20,31 +20,47 @@ public class PictureService extends JpaService<Long,Picture> {
     @Inject
     private AlbumService albumService;
 
-    @Override
-    public void create(Picture p) throws ServiceException {
+    // @BUG from tomee. With edit-picture.xhtml, this method is executed
+    // even if this.setField(p) is commented in edit(Picture) methodd
+    private void setField(Picture p) throws ServiceException {
         // Or with File.io (older) see for example http://javabydeveloper.com/save-image-working-large-objects/
         // Image size must be smaller than 2 GB with Files.readAllBytes(Path)
-        byte[] picBytes;
-        try {
-            // if Files.size < 0.9 MB
-            // By Default MySql restrict file > 1MB
-            // http://www.codejava.net/coding/upload-files-to-database-servlet-jsp-mysql
-            if (p.getPart().getSize() > 900000) {
-                throw new ServiceException("Not allowed to save file > 1MB in Database");
+        if (p.getPart() != null) {
+            byte[] picBytes;
+            try {
+                // if Files.size < 0.9 MB
+                // By Default MySql restrict file > 1MB
+                // http://www.codejava.net/coding/upload-files-to-database-servlet-jsp-mysql
+                if (p.getPart().getSize() > 900000) {
+                    throw new ServiceException("Not allowed to save file > 1MB in Database");
+                }
+                InputStream partInputStream = p.getPart().getInputStream();
+                picBytes = IOUtilsCust.toByteArray(partInputStream);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                throw new ServiceException("IOException with upload of file " + p.getPart().getName());
             }
-            InputStream partInputStream = p.getPart().getInputStream();
-            picBytes = IOUtilsCust.toByteArray(partInputStream);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            throw new ServiceException("IOException with upload of file " + p.getPart().getName());
+            p.setFile(picBytes);
+            // See also http://www.ramkitech.com/2013/06/file-upload-is-easy-in-jsf22.html
+            p.setContentType(p.getPart().getHeader("Content-Type"));
         }
-        p.setFile(picBytes);
-        // See also http://www.ramkitech.com/2013/06/file-upload-is-easy-in-jsf22.html
-        p.setContentType(p.getPart().getHeader("Content-Type"));
-        p.setDateCreated();
+    }
+
+    @Override
+    public void create(Picture p) throws ServiceException {
+        this.setField(p);
         p.setAlbum(albumService.read(p.getAlbumId()));
+        p.setDateCreated();
         super.create(p);
+    }
+
+    @Override
+    public void edit(Picture p) throws ServiceException {
+        if (p.getPart() != null && p.getPart().getSize() > 0)
+            this.setField(p);
+        p.setAlbum(albumService.read(p.getAlbumId()));
+        super.edit(p);
     }
 
     public List<Picture> listPictureOwnedBy(AppUser a) throws ServiceException {

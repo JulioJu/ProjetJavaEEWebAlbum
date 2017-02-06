@@ -86,7 +86,7 @@ public class AppUserController {
 		return Pages.list_user;
 	}
 
-	public String editUserPage(Long userIdRetrieveFromView) {
+	public String viewEditPage(Long userIdRetrieveFromView) {
 		try {
 			this.user = appUserService.read(userIdRetrieveFromView);
 		} catch (ServiceException e) {

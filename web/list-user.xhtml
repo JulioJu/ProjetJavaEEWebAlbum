@@ -70,11 +70,11 @@
                         <h:outputText value="#{user.dateCreated.getTime()}" />
                     </h:column>
                     <h:column rendered="#{appUserSession.getConnectedUser().equals(user)}" >
-                        <h:commandLink action="#{appUserController.editUserPage(appUserSession.getConnectedUser().id)}" value="Edit your own account" />
+                        <h:commandLink action="#{appUserController.viewEditPage(appUserSession.getConnectedUser().id)}" value="Edit your own account" />
                     </h:column>
                     <h:column rendered="#{appUserSession.getConnectedUser().isAdmin()
                             and not appUserSession.getConnectedUser().equals(user)}" >
-                        <h:commandLink action="#{appUserController.editUserPage(user.id)}" value="Edit this account" />
+                        <h:commandLink action="#{appUserController.viewEditPage(user.id)}" value="Edit this account" />
                     </h:column>
                     <h:column rendered="#{appUserSession.getConnectedUser().equals(user)}" >
                         <h:commandLink action="#{appUserController.delete(appUserSession.getConnectedUser().id)}" value="Delete your own account" />

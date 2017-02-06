@@ -19,6 +19,7 @@ public interface Pages {
 	String edit_album = "edit-album.xhtml";
 	String error_403 = "error-403.xhtml";
 	String error_404 = "error-404.xhtml";
+	String edit_picture = "edit-picture.xhtml";
 
 	String[] FILTEREDPAGE_CONNECTED = {
 		add_album,
@@ -26,8 +27,9 @@ public interface Pages {
 		list_picture_owned,
 		add_picture,
 		information_current_user,
-        edit_user,
+		edit_user,
 		edit_album,
+		edit_picture
 	};
 
 }

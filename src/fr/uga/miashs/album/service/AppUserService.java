@@ -17,10 +17,8 @@ public class AppUserService extends JpaService<Long,AppUser> {
 
 	private static final long serialVersionUID = 3975934852005119859L;
 
-	@Override
-	public void create(AppUser v) throws ServiceException {
+	private void setField(AppUser v) throws ServiceException {
 		try {
-			v.setDateCreated();
 			super.create(v);
 		}
 		catch (RollbackException e) {
@@ -34,8 +32,16 @@ public class AppUserService extends JpaService<Long,AppUser> {
 	}
 
 	@Override
+	public void create(AppUser v) throws ServiceException {
+		v.setDateCreated();
+		this.setField(v);
+		super.create(v);
+	}
+
+	@Override
 	public void edit(AppUser v) throws ServiceException {
-		this.create(v);
+		this.setField(v);
+		super.edit(v);
 	}
 
 

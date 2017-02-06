@@ -50,6 +50,7 @@ public class Album implements Serializable {
 	@OneToMany(mappedBy="album")
 	private Set<Picture> pictures;
 
+	@NotNull
 	@Temporal(TemporalType.TIME)
 	private Calendar dateCreated;
 

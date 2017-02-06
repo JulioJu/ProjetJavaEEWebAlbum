@@ -61,7 +61,7 @@
                         <f:selectItems value="#{appUserService.listUsers()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id} firstname:&#39;#{user.firstname}&#39; lastname:&#39;#{user.lastname}&#39;" itemDisabled="#{user.equals(appUserSession.getConnectedUser())}" />
                     </h:selectManyListbox>
                 </div>
-                <h:commandButton styleClass="btn btn-primary" action="#{albumController.createAlbum()}" value="Create album"/>
+                <h:commandButton styleClass="btn btn-primary" action="#{albumController.create()}" value="Create album"/>
             <!-- \h:form -->
             </h:form>
     </div>

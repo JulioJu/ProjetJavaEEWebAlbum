@@ -62,6 +62,7 @@ public class AppUser implements Serializable {
 	@NotNull
 	private boolean admin;
 
+	@NotNull
 	@Temporal(TemporalType.TIME)
 	private Calendar dateCreated;
 

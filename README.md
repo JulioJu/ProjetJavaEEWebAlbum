@@ -74,10 +74,13 @@ See also comments in AlbumController.java.
 
 See informations in FilterPage.java
 
-## TODO
-Inform exceptions in Facelet view
+## @TODO
+* Inform exceptions in Facelet view
+* Manage JpaService.read(key) issues (key not found in database)
+* Test if client send good POST values
+* Make a custom header for edit-album.xhtml (all link should end conversation), or try with ReachFaces ([see also](http://stackoverflow.com/questions/9983904/is-there-a-way-to-call-a-method-upon-leaving-a-page-with-jsf-or-primefaces))
+* See strange bug (fixed) in PictureService.java (see comment). Is it only with tomee ?
 
-Manage JpaService.read(key) issues (key not found in database)
 
 <!-- vim: sw=4 ts=4 et:
 -->

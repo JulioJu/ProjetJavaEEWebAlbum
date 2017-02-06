@@ -1,0 +1,120 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    >
+
+<f:view>
+
+<!-- head -->
+<!-- –––– -->
+<h:head>
+    <!-- ui:include src="/template/head.xhtml" -->
+    <ui:include src="templates/head.xhtml" />
+    <h:outputStylesheet library="css" name="jasny-bootstrap.min.css" />
+    <h:outputStylesheet library="css" name="list_picture.css" />
+    <h:outputScript name="list-picture.js" library="js" />
+</h:head>
+
+<!-- h:body -->
+<!-- –––– -->
+<h:body>
+
+<!-- ui:include src="/template/header.xhtml" -->
+<!-- –––– -->
+<ui:include src="templates/header.xhtml" />
+
+<!-- main -->
+<!-- –––– -->
+
+
+<div class="container" role="main" >
+
+    <div class="col-xs-12
+            col-sm-10 col-sm-offset-1
+            col-md-8 col-md-offset-2
+            col-lg-6 col-md-offset-3
+            ">
+        <!-- title -->
+        <div class="page-header">
+            <h1>Modify picture (id:#{pictureController.picture.id})
+            </h1>
+        </div>
+            <!-- h:form -->
+            <h:form id="formId" enctype="multipart/form-data">
+                <div class="form-group">
+                    <h:outputLabel for="albumId" value="Choose one album" />
+                    <h:selectOneMenu id="ablumId" value="#{pictureController.picture.albumId}" styleClass="form-control" p:required="required" >
+                        <f:selectItem itemValue="#{null}" itemLabel="-- select one --" />
+                        <f:selectItems value="#{albumController.getListAlbumOwnedByCurrentUser()}" var="alb" itemValue="#{alb.id}" itemLabel="id:#{alb.id} title:&#39;#{alb.title}&#39;" />
+                    </h:selectOneMenu>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="title" value="Title" />
+                    <h:inputText id="title" p:placeholder="Title" styleClass="form-control" p:required="required" value="#{pictureController.picture.title}"
+                            title="Title"/>
+                    <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="thumId" value="Actual picture" />
+                    <h:graphicImage id="thumbId" value="/pictures/#{pictureController.picture.id}" alt="#{pictureController.picture.title}" height="32" width="32" styleClass="thumbnail" />
+                    <div id="#{pictureController.picture.id}:modal" class="modal">
+                        <span id="#{pictureController.picture.id}:closeId" class="close" onclick="document.getElementById('#{pictureController.picture.id}:modal').style.display='none'">×</span>
+                        <h:graphicImage id="modalImg" styleClass="modal-content" />
+                        <div id="#{pictureController.picture.id}:captionId" class="caption" ></div>
+                    </div>
+                    <script type="text/javascript" charset="utf-8">
+                        modalImage(
+                            <h:outputText value="
+                                '#{pictureController.picture.id}:modal',
+                                'formId:thumbId',
+                                'formId:modalImg',
+                                '#{pictureController.picture.id}:captionId',
+                                '#{pictureController.picture.id}:closeId'
+                                " />
+                        );
+                    </script>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="uriString" value="Download new image (warning : replace actual picture)" />
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                        <div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileinput-new">Select image</span>
+                                <span class="fileinput-exists">Change</span>
+                                <h:inputFile id="uriString" name="uriString" value="#{pictureController.picture.part}" p:type="file" p:accept="image/*" p:required="required" />
+                            </span>
+                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                        </div>
+                    </div>
+                </div>
+                <h:commandButton styleClass="btn btn-primary" action="#{pictureController.edit()}" value="Edit picture" >
+                    <f:param name="id" value="#{pictureController.picture.id}" />
+                </h:commandButton>
+            <!-- \h:form -->
+            </h:form>
+    </div>
+</div> <!-- /container -->
+
+<!-- ui:include src="/template/footer-script.xhtml" -->
+<!-- –––– -->
+<ui:include src="templates/footer-script.xhtml" />
+<h:outputScript name="jasny-bootstrap.min.js"  library="js" />
+
+<!-- \h:body -->
+<!-- –––– -->
+</h:body>
+
+</f:view>
+
+</html>
+
+<!-- vim: sw=4 ts=4 et:
+-->
+
