@@ -23,6 +23,8 @@ import fr.uga.miashs.album.service.ServiceException;
 @NamedQueries({
     @NamedQuery(name="Picture.findAllOwned",
                 query="SELECT p FROM Picture p Join p.album a WHERE a.owner=:owner"),
+    @NamedQuery(name="Picture.findAllShared",
+                query="SELECT p FROM Picture p Join p.album a join a.sharedWith s WHERE s.id=:currentUser"),
     @NamedQuery(name="Picture.findAllFromOneAlbum",
                 query="SELECT p FROM Picture p WHERE p.album=:album"),
 })

@@ -44,7 +44,7 @@
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Album</li>
                                 <li>
-                                    <h:link outcome="#{Pages.list_album}" value="List album" styleClass="" />
+                                    <h:link outcome="#{Pages.list_album_owned}" value="List album owned" styleClass="" />
                                 </li>
                                 <li>
                                     <h:link outcome="#{Pages.add_album}" value="Add album" styleClass="" />
@@ -55,10 +55,13 @@
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Pictures</li>
                                 <li>
-                                    <h:link outcome="#{Pages.list_picture_owned}" value="List pictures" styleClass="" />
+                                    <h:link outcome="#{Pages.list_picture_owned}" value="List pictures owned" styleClass="" />
                                 </li>
                                 <li>
                                     <h:link outcome="#{Pages.add_picture}" value="Add picture" styleClass="" />
+                                </li>
+                                <li>
+                                    <h:link outcome="#{Pages.list_picture_shared}" value="List pictures shared" styleClass="" />
                                 </li>
                             </ul>
                         </li>

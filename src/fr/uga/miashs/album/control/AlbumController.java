@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import fr.uga.miashs.album.model.Album;
 import fr.uga.miashs.album.model.AppUser;
+import fr.uga.miashs.album.model.Picture;
 import fr.uga.miashs.album.service.AlbumService;
 import fr.uga.miashs.album.service.AppUserService;
 import fr.uga.miashs.album.service.ServiceException;
@@ -77,6 +78,16 @@ public class AlbumController implements Serializable {
 		return "?faces-redirect=true";
 	}
 
+	public String viewPictureByAlbum(Long albumIdRetrieveFromView) {
+		try {
+			this.album = albumService.read(albumIdRetrieveFromView);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Pages.list_picture_by_album;
+	}
+
 	public Album getAlbum() {
 		// useful when launch view add-album.xhtml
 		if (album==null) {
@@ -85,11 +96,12 @@ public class AlbumController implements Serializable {
 		return album;
 	}
 
-	/**
-	 * @param album the album to set
-	 */
 	public void setAlbum(Album album) {
 		this.album = album;
+	}
+
+	public String blop() {
+		return Pages.login;
 	}
 
 	private boolean isAllowedModify() {
@@ -108,7 +120,7 @@ public class AlbumController implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return Pages.list_album;
+		return Pages.list_album_owned;
 	}
 
 	public String edit() {
@@ -120,7 +132,7 @@ public class AlbumController implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return Pages.list_album + this.endConversation();
+		return Pages.list_album_owned + this.endConversation();
 	}
 
 	public String delete(long albumId) {
@@ -142,7 +154,7 @@ public class AlbumController implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return Pages.list_album;
+		return Pages.list_album_owned;
 	}
 
 	public List<Album> getListAlbumOwnedByCurrentUser() {
@@ -175,6 +187,10 @@ public class AlbumController implements Serializable {
 		}
 		userList.removeAll(album.getSharedWith());
 		return userList;
+	}
+
+	public Set<Picture> getPictures(){
+		return this.album.getPictures();
 	}
 
 }

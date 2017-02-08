@@ -80,6 +80,23 @@ See informations in FilterPage.java
 * Test if client send good POST values
 * Make a custom header for edit-album.xhtml (all link should end conversation), or try with ReachFaces ([see also](http://stackoverflow.com/questions/9983904/is-there-a-way-to-call-a-method-upon-leaving-a-page-with-jsf-or-primefaces))
 * See strange bug (fixed) in PictureService.java (see comment). Is it only with tomee ?
+* Ask confirmation before perform an action (in JavaScript)
+* Remove Omnifaces and change Pages interface to an CDI bean (issues, could not
+        be injected in all classes)
+* Move templates in WEB-INF, and access it with CDI bean Pages
+* Put bootstrap col in template
+
+## Know issues
+* When there is more than 10 pictures in Database :
+```
+Multiple concurrent threads attempted to access a single broker. By default brokers are not thread safe; if you require and/or intend a broker to be accessed by more than one thread, set the openjpa.Multithreaded property to true to override the default behavior.
+(…)
+Caused by:
+org.apache.openjpa.persistence.PersistenceException - Multiple concurrent threads attempted to access a single broker. By default brokers are not thread safe; if you require and/or intend a broker to be accessed by more than one thread, set the openjpa.Multithreaded property to true to override the default behavior.  at org.apache.openjpa.kernel.BrokerImpl.endOperation(BrokerImpl.java:1987)
+```
+=> Maybe, configure better Database, and use Hibernate + Mysql (Derby is not thread safe)
+* Sometimes, even we refres, deconnect, reconnect, an picture not inserted is no displayed
+==> restart TomEE for fix this issue.
 
 
 <!-- vim: sw=4 ts=4 et:

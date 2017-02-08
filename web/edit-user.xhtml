@@ -6,7 +6,6 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
     >
 
 <f:view>
@@ -61,7 +60,7 @@
                     <!-- validator="#{ajoutAlbum.validerZip}"  -->
                     <div class="help-block with-errors"></div>
                 </div>
-                <c:if test="#{appUserSession.getConnectedUser().isAdmin()}">
+                <ui:fragment rendered="#{appUserSession.getConnectedUser().isAdmin()}">
                     <div class="form-group">
                         <h:outputLabel for="admin" value="Admin" />
                         <h:inputText id="admin" styleClass="form-control" p:required="required" value="#{appUserController.user.admin}"
@@ -69,7 +68,7 @@
                         <!-- validator="#{ajoutAlbum.validerZip}"  -->
                         <div class="help-block with-errors"></div>
                     </div>
-                </c:if>
+                </ui:fragment>
                 <div class="form-group">
                     <h:outputLabel for="lastname" value="Lastname" />
                     <h:inputText id="lastname" styleClass="form-control" p:required="required" value="#{appUserController.user.lastname}"
@@ -91,7 +90,7 @@
                     <div class="help-block with-errors"></div>
                 </div>
                 <h:commandButton styleClass="btn btn-primary" action="#{appUserController.edit()}" value="Perform modifications" >
-                    <f:param name="id" value="#{appUserController.user.id}" />
+                    <f:param name="userId" value="#{appUserController.user.id}" />
                 </h:commandButton>
             </h:form>
     </div>

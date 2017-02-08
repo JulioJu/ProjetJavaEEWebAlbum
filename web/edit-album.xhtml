@@ -13,7 +13,7 @@
 <!-- –––– -->
 <f:metadata>
 <f:event type="preRenderView" listener="#{albumController.initConversation()}"/>
-<f:viewParam name="album"
+<f:viewParam name="albumId"
         value="#{albumController.album}"
         converter="src.fr.miashs.album.control.AlbumConvertor"
         required="true" requiredMessage="Invalid page access. Please use a link from within the system."/>

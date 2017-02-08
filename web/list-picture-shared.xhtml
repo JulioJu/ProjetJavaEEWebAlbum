@@ -1,6 +1,5 @@
 <!-- <?xml version="1.0" encoding="UTF-8"?> -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
@@ -11,26 +10,19 @@
 
 <f:view>
 
-<ui:composition template="templates/common.xhtml">
+<ui:composition template="templates/list-picture-form.xhtml">
+<ui:param name="repeatValue" value="#{pictureController.getListPictureSharedWithCurrentUser()}" />
         <ui:define name="title">
-            List album shared with you
+            Pictures shared with you
         </ui:define>
-        <ui:define name="content">
+        <ui:define name="form-button">
             <o:importConstants type="fr.uga.miashs.album.util.Pages" />
-            <!-- h:form -->
-            <h:form>
-                <h:dataTable styleClass="table table-condensed" value="#{albumController.getListAlbumShared()}" var="alb">
-                    <ui:include src="templates/list-album-form.xhtml" />
-                </h:dataTable>
-            <!-- \h:form -->
-            </h:form>
             <div class="form-signin">
-                <h:link styleClass="btn btn-lg btn-info btn-block" role="button" outcome="#{Pages.list_album_owned}" value="See also album owned" />
+                <h:link styleClass="btn btn-lg btn-info btn-block" role="button" outcome="#{Pages.list_picture_owned}" value="See also pictures owned by you" />
             </div>
         </ui:define>
 </ui:composition>
 </f:view>
-
 </html>
 
 <!-- vim: sw=4 ts=4 et:

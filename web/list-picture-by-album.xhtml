@@ -1,0 +1,45 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:o="http://omnifaces.org/ui"
+    >
+
+<f:view>
+
+<f:metadata>
+<f:viewParam name="albumId"
+        value="#{albumController.album}"
+        converter="src.fr.miashs.album.control.AlbumConvertor"
+        required="true" requiredMessage="Invalid page access. Please use a link from within the system."/>
+</f:metadata>
+
+<ui:composition template="templates/list-picture-form.xhtml">
+<ui:param name="repeatValue" value="#{albumController.album.pictures}" />
+        <ui:define name="title">
+            Album's pictures <h:outputText value="#{albumController.album.id}" ></h:outputText>
+        </ui:define>
+        <ui:define name="form-button">
+            <o:importConstants type="fr.uga.miashs.album.util.Pages" />
+            <div class="form-signin">
+                <h:link styleClass="btn btn-lg btn-success btn-block" role="button" outcome="#{Pages.add_picture_in_spec_album}" value="Create picture for this album">
+                    <f:param name="albumId" value="#{albumController.album.id}" />
+                </h:link>
+            </div>
+            <div class="form-signin">
+                <h:button styleClass="btn btn-lg btn-info btn-block" role="button" outcome="#{Pages.list_picture_shared}" value="See also all pictures owned by you" />
+            </div>
+            <div class="form-signin">
+                <h:button styleClass="btn btn-lg btn-info btn-block" role="button" outcome="#{Pages.list_picture_shared}" value="See also pictures shared with you" />
+            </div>
+        </ui:define>
+</ui:composition>
+</f:view>
+</html>
+
+<!-- vim: sw=4 ts=4 et:
+-->

@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.enterprise.context.NonexistentConversationException;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -60,6 +59,7 @@ public class FilterPage implements Filter {
     @Inject
     private AppUserSession appUserSession;
     @Inject PictureService pictureService;
+    @Inject AlbumController albumController;
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
@@ -73,11 +73,18 @@ public class FilterPage implements Filter {
     public void doFilter (ServletRequest req, ServletResponse res, FilterChain chain)
         throws IOException, ServletException {
 
+    boolean alreadyCommited = false;
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
-    FacesContext facesContext = FacesContext.getCurrentInstance();
     String requestedUri = ((HttpServletRequest) request).getRequestURI()
         .substring(((HttpServletRequest) request).getContextPath().length()+1);
+
+    // @TODO
+    // Filter paramet cid, and call AlbumController.endConversation()
+    // Maybe, find a solution for always remove parameter cid. It would be the better
+    if (request.getParameter("cid")!=null && !request.getParameter("cid").equals("")) {
+        System.out.println("[Warning] conversation not properly closed");
+    }
 
     // Filter 403 and login
     if (requestedUri.equals(Pages.error_403))
@@ -88,13 +95,13 @@ public class FilterPage implements Filter {
                 if(appUserSession == null || appUserSession.getConnectedUser() == null){
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     request.getRequestDispatcher(Pages.login).forward(request, response);
+                    alreadyCommited=true;
                 }
             }
         }
     }
 
     // Filter ghost folder « pictures/ »
-    boolean alreadyCommited = false;
     if (requestedUri.startsWith("pictures/")){
             if ( appUserSession != null
                     && appUserSession.getConnectedUser() != null){

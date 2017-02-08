@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,9 +24,9 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
 	@NamedQuery(name="Album.findAllOwned",
 				query="SELECT a FROM Album a WHERE a.owner=:owner"),
-	// s => AppUser
 	@NamedQuery(name="Album.findAllShared",
-				query="SELECT a FROM Album a join a.sharedWith s WHERE s.id=:current_user"),
+				// s.id refers to AppUser.id
+				query="SELECT a FROM Album a join a.sharedWith s WHERE s.id=:currentUser"),
 })
 public class Album implements Serializable {
 
@@ -44,10 +45,12 @@ public class Album implements Serializable {
 	@ManyToOne
 	private AppUser owner;
 
-	@ManyToMany
+	// https://vladmihalcea.com/2015/03/05/a-beginners-guide-to-jpa-and-hibernate-cascade-types/
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<AppUser> sharedWith;
 
-	@OneToMany(mappedBy="album")
+	// http://www.objectdb.com/java/jpa/persistence/delete
+	@OneToMany(mappedBy="album", cascade = CascadeType.ALL, orphanRemoval=true)
 	private Set<Picture> pictures;
 
 	@NotNull

@@ -57,7 +57,7 @@ public class AlbumService extends JpaService<Long,Album> {
 	public List<Album> listAlbumShared(AppUser a) throws ServiceException {
 		//La requete est définie dans la classe Album grâce à une annotation
 		Query query = getEm().createNamedQuery("Album.findAllShared");
-		query.setParameter("current_user", a.getId());
+		query.setParameter("currentUser", a.getId());
 		return query.getResultList();
 	}
 

@@ -1,0 +1,56 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:o="http://omnifaces.org/ui"
+    >
+
+<f:view>
+<ui:composition template="templates/common.xhtml">
+        <ui:define name="title">
+            List album owned by you
+        </ui:define>
+        <ui:define name="content">
+        <o:importConstants type="fr.uga.miashs.album.util.Pages" />
+            <!-- h:form -->
+            <h:form>
+                <h:dataTable styleClass="table table-condensed" value="#{albumController.getListAlbumOwnedByCurrentUser()}" var="alb">
+                    <ui:include src="templates/list-album-form.xhtml" />
+                    <h:column>
+                        <f:facet name="header">Share</f:facet>
+                        <h:selectManyListbox id="sharedWith" styleClass="form-control" >
+                            <f:selectItem itemValue="#{null}" itemLabel="Share:" />
+                            <f:selectItems value="#{alb.getSharedWith()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id}"  />
+                        </h:selectManyListbox>
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="#{albumController.viewPictureByAlbum(alb.id)}" value="show"  />
+                    </h:column>
+                    <h:column>
+                        <h:link outcome="#{Pages.edit_album}" value="edit" >
+                            <f:param name="albumId" value="#{alb.id}" />
+                        </h:link>
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
+                    </h:column>
+                </h:dataTable>
+            <!-- \h:form -->
+            </h:form>
+            <div class="form-signin">
+                <h:link styleClass="btn btn-lg btn-primary btn-block" role="button" outcome="#{Pages.add_album}" value="Create album" />
+            </div>
+            <div class="form-signin">
+                <h:link styleClass="btn btn-lg btn-info btn-block" role="button" outcome="#{Pages.list_album_shared}" value="See also album shared" />
+            </div>
+        </ui:define>
+</ui:composition>
+
+</f:view>
+</html>
+<!-- vim: sw=4 ts=4 et:
+-->

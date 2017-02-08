@@ -1,0 +1,54 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" -->
+<!--         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+
+<ui:composition template="/templates/common.xhtml">
+        <ui:define name="header" >
+            <h:outputStylesheet library="css" name="list_picture.css" />
+            <h:outputStylesheet library="css" name="jasny-bootstrap.min.css" />
+        </ui:define>
+        <ui:define name="title">
+            Add picture in album
+            <ui:insert name="titleAlbumId" />
+        </ui:define>
+        <ui:define name="content">
+            <!-- h:form -->
+            <h:form enctype="multipart/form-data">
+                <!-- h:form -->
+                <ui:insert name="inputSelectAlbumId" />
+                <div class="form-group">
+                    <h:outputLabel for="title" value="Title" />
+                    <h:inputText id="title" p:placeholder="Title" styleClass="form-control" p:required="required" value="#{pictureController.picture.title}"
+                            title="Title"/>
+                    <!-- validator="#{ajoutAlbum.validerNomAlbum}" -->
+                </div>
+                <div class="form-group">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                        <div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileinput-new">Select image</span>
+                                <span class="fileinput-exists">Change</span>
+                                <h:inputFile id="uriString" name="uriString" value="#{pictureController.picture.part}" p:type="file" p:accept="image/*" p:required="required" />
+                            </span>
+                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                        </div>
+                    </div>
+                </div>
+                <ui:insert name="submitButton" />
+            </h:form>
+        </ui:define>
+        <ui:define name="footer">
+            <h:outputScript name="jasny-bootstrap.min.js"  library="js" />
+        </ui:define>
+</ui:composition>
+</html>
+
+<!-- vim: sw=4 ts=4 et:
+-->

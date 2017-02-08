@@ -1,0 +1,63 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      >
+
+<f:view>
+
+<!-- head -->
+<!-- –––– -->
+<h:head>
+    <!-- ui:include src="/template/head.xhtml" -->
+    <ui:include src="/templates/head.xhtml" />
+    <ui:insert name="header" ></ui:insert>
+</h:head>
+
+<!-- h:body -->
+<!-- –––– -->
+<h:body>
+
+<!-- ui:include src="/template/header.xhtml" -->
+<!-- –––– -->
+<ui:include src="/templates/header.xhtml" />
+
+<!-- main -->
+<!-- –––– -->
+
+
+<div class="container" role="main" >
+
+    <div class="col-xs-12
+            col-sm-10 col-sm-offset-1
+            col-md-8 col-md-offset-2
+            col-lg-6 col-md-offset-3
+            ">
+        <!-- title -->
+        <div class="page-header">
+            <h1><ui:insert name="title" ></ui:insert></h1>
+        </div>
+
+        <ui:insert name="content" ></ui:insert>
+    </div>
+</div> <!-- /container -->
+
+<!-- ui:include src="/template/footer-script.xhtml" -->
+<!-- –––– -->
+<ui:include src="/templates/footer-script.xhtml" />
+<ui:insert name="footer" ></ui:insert>
+
+<!-- \h:body -->
+<!-- –––– -->
+</h:body>
+
+</f:view>
+
+</html>
+
+<!-- vim: sw=4 ts=4 et:
+-->

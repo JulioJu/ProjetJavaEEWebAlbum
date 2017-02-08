@@ -11,26 +11,22 @@
 
 <f:view>
 
-<ui:composition template="templates/common.xhtml">
+<ui:composition template="templates/list-picture-form.xhtml">
+<ui:param name="repeatValue" value="#{pictureController.getListPictureOwnedByCurrentUser()}" />
         <ui:define name="title">
-            List album shared with you
+            Pictures owned by you
         </ui:define>
-        <ui:define name="content">
+        <ui:define name="form-button">
             <o:importConstants type="fr.uga.miashs.album.util.Pages" />
-            <!-- h:form -->
-            <h:form>
-                <h:dataTable styleClass="table table-condensed" value="#{albumController.getListAlbumShared()}" var="alb">
-                    <ui:include src="templates/list-album-form.xhtml" />
-                </h:dataTable>
-            <!-- \h:form -->
-            </h:form>
             <div class="form-signin">
-                <h:link styleClass="btn btn-lg btn-info btn-block" role="button" outcome="#{Pages.list_album_owned}" value="See also album owned" />
+                <h:button styleClass="btn btn-lg btn-success btn-block" role="button" outcome="#{Pages.add_picture}" value="Create picture" />
+            </div>
+            <div class="form-signin">
+                <h:button styleClass="btn btn-lg btn-info btn-block" role="button" outcome="#{Pages.list_picture_shared}" value="See also pictures shared with you" />
             </div>
         </ui:define>
 </ui:composition>
 </f:view>
-
 </html>
 
 <!-- vim: sw=4 ts=4 et:

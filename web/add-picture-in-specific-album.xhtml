@@ -1,0 +1,39 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    >
+
+<f:view>
+
+<f:metadata>
+<f:viewParam name="albumId"
+        value="#{albumController.album}"
+        converter="src.fr.miashs.album.control.AlbumConvertor"
+        required="true" requiredMessage="Invalid page access. Please use a link from within the system."/>
+</f:metadata>
+
+<ui:composition template="templates/add-picture-form.xhtml">
+
+    <ui:define name="titleAlbumId">
+                    #{albumController.album.id}
+                    (title: #{albumController.album.title})
+    </ui:define>
+
+    <ui:define name="submitButton">
+        <h:commandLink styleClass="btn btn-primary" action="#{pictureController.create()}" value="Create picture in predifined Album #{param.albumId}" >
+                <f:param name="albumId" value="#{param.albumId}" />
+        </h:commandLink>
+    </ui:define>
+</ui:composition>
+
+</f:view>
+
+</html>
+
+<!-- vim: sw=4 ts=4 et:
+-->

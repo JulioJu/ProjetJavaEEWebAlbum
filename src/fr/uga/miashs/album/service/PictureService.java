@@ -25,7 +25,7 @@ public class PictureService extends JpaService<Long,Picture> {
     private void setField(Picture p) throws ServiceException {
         // Or with File.io (older) see for example http://javabydeveloper.com/save-image-working-large-objects/
         // Image size must be smaller than 2 GB with Files.readAllBytes(Path)
-        if (p.getPart() != null) {
+        if (p.getPart() != null && p.getPart().getSize()>0) {
             byte[] picBytes;
             try {
                 // if Files.size < 0.9 MB
@@ -57,8 +57,9 @@ public class PictureService extends JpaService<Long,Picture> {
 
     @Override
     public void edit(Picture p) throws ServiceException {
-        if (p.getPart() != null && p.getPart().getSize() > 0)
+        if (p.getPart() != null && p.getPart().getSize() > 0) {
             this.setField(p);
+        }
         p.setAlbum(albumService.read(p.getAlbumId()));
         super.edit(p);
     }
@@ -70,10 +71,17 @@ public class PictureService extends JpaService<Long,Picture> {
         return query.getResultList();
     }
 
+    public List<Picture> listPictureSharedWith(AppUser a) throws ServiceException {
+        //La requete est définie dans la classe Picture grâce à une annotation
+        Query query = getEm().createNamedQuery("Picture.findAllShared");
+        query.setParameter("currentUser", a.getId());
+        return query.getResultList();
+    }
+
     public List<Picture> listPictureFromOneAlbum(Album a) throws ServiceException {
         //La requete est définie dans la classe Picture grâce à une annotation
         Query query = getEm().createNamedQuery("Picture.findAllFromOneAlbum");
-        query.setParameter("album", getEm().merge(a));
+        query.setParameter("album", getEm().merge(a.getId()));
         return query.getResultList();
     }
 

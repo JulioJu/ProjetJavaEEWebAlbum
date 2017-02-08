@@ -60,11 +60,17 @@ public class AppUserController {
 	public String edit() {
 		AppUser userTmp = user;
 		FacesContext ctx = FacesContext.getCurrentInstance();
-		String idString = (String) ctx.getExternalContext().
-				getRequestParameterMap().get("id");
-		Long userIdRetrieveFromView = Long.valueOf(idString);
+		Long userId;
 		try {
-			user = appUserService.read(userIdRetrieveFromView);
+		userId = Long.valueOf(ctx.getExternalContext().
+				getRequestParameterMap().get("userId"));
+		}
+		catch (NumberFormatException e) {
+			// TODO
+			throw new RuntimeException("You have passed wrong parameters");
+		}
+		try {
+			user = appUserService.read(userId);
 		} catch (ServiceException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

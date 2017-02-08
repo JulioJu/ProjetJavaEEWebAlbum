@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -56,7 +57,8 @@ public class AppUser implements Serializable {
 	@NotNull
 	private String password;
 
-	@OneToMany(mappedBy="owner")
+	// http://www.objectdb.com/java/jpa/persistence/delete
+	@OneToMany(mappedBy="owner", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<Album> userAlbums;
 
 	@NotNull

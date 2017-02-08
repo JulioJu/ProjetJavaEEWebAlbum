@@ -1,0 +1,76 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" -->
+<!--         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      >
+
+<ui:composition template="/templates/common.xhtml">
+        <ui:define name="header" >
+            <h:outputStylesheet library="css" name="list_picture.css" />
+            <h:outputScript name="list-picture.js" library="js" />
+        </ui:define>
+        <ui:define name="content">
+            <o:importConstants type="fr.uga.miashs.album.util.Pages" />
+            <!-- h:form -->
+            <h:form id="formId">
+                <table class="table">
+                    <tr>
+                        <th>Title </th>
+                        <th>Identifier </th>
+                        <th>Album id </th>
+                        <th>Album title </th>
+                        <th>Creation time </th>
+                        <th>Content type </th>
+                        <th>File </th>
+                        <ui:insert name="table-head" ></ui:insert>
+                    </tr>
+                    <ui:repeat value="#{repeatValue}" var="pict" id="tableId" varStatus="varStatus" >
+                            <tr>
+                                <td>#{pict.title}</td>
+                                <td>#{pict.id}</td>
+                                <td>#{pict.album.id}</td>
+                                <td>#{pict.album.title}</td>
+                                <td>#{pict.dateCreated.getTime()}</td>
+                                <td>#{pict.getContentType()}</td>
+                                <td>
+                                    <img id="#{pict.id}:thumbId" src="#{request.getContextPath()}/pictures/#{pict.id}" alt="#{pict.title}" height="32" width="32" class="thumbnail" />
+                                    <div id="#{pict.id}:modal" class="modal">
+                                        <span id="#{pict.id}:closeId" class="close" onclick="document.getElementById('#{pict.id}:modal').style.display='none'">×</span>
+                                        <img id="#{pict.id}:modalImg" class="modal-content" alt="Click to show"/>
+                                        <div id="#{pict.id}:captionId" class="caption" ></div>
+                                    </div>
+                                    <script type="text/javascript" charset="utf-8">
+                                        modalImage(
+                                            <h:outputText value="
+                                                '#{pict.id}:modal',
+                                                '#{pict.id}:thumbId',
+                                                '#{pict.id}:modalImg',
+                                                '#{pict.id}:captionId',
+                                                '#{pict.id}:closeId'
+                                                " />
+                                        );
+                                    </script>
+                                </td>
+                                <td>
+                                    <h:link outcome="#{Pages.edit_picture}" value="edit" >
+                                        <f:param name="pictureId" value="#{pict.id}" />
+                                        <f:param name="fromPage" value="#{Pages.list_picture_by_album}" />
+                                    </h:link>
+                                </td>
+                                <td> <h:commandLink action="#{pictureController.delete(pict.id)}" value="delete" /> </td>
+                            </tr>
+                    </ui:repeat>
+                </table>
+            <!-- \h:form -->
+            </h:form>
+            <ui:insert name="form-button" />
+        </ui:define>
+</ui:composition>
+</html>
+
+<!-- vim: sw=4 ts=4 et:
+-->
