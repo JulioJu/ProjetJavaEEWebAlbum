@@ -55,13 +55,16 @@
                                         );
                                     </script>
                                 </td>
-                                <td>
-                                    <h:link outcome="#{Pages.edit_picture}" value="edit" >
-                                        <f:param name="pictureId" value="#{pict.id}" />
-                                        <f:param name="fromPage" value="#{Pages.list_picture_by_album}" />
-                                    </h:link>
-                                </td>
-                                <td> <h:commandLink action="#{pictureController.delete(pict.id)}" value="delete" /> </td>
+                                <ui:fragment rendered="#{appUserSession.getConnectedUser().isAdmin()
+                                        or appUserSession.getConnectedUser().equals(pict.album.owner)}">
+                                    <td>
+                                        <h:link outcome="#{Pages.edit_picture}" value="edit" >
+                                            <f:param name="pictureId" value="#{pict.id}" />
+                                            <f:param name="fromPage" value="#{Pages.list_picture_by_album}" />
+                                        </h:link>
+                                    </td>
+                                    <td> <h:commandLink action="#{pictureController.delete(pict.id)}" value="delete" /> </td>
+                                </ui:fragment>
                             </tr>
                     </ui:repeat>
                 </table>

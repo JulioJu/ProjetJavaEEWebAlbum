@@ -98,6 +98,9 @@ org.apache.openjpa.persistence.PersistenceException - Multiple concurrent thread
 * Sometimes, even we refres, deconnect, reconnect, an picture not inserted is no displayed
 ==> restart TomEE for fix this issue.
 
+# Info
+* Info : only admin or owner can delete or change album or picture. Delete link do nothing, and edit link send 403 error.
+
 
 <!-- vim: sw=4 ts=4 et:
 -->

@@ -79,7 +79,8 @@ public class AppUserController {
 			return Pages.error_403;
 		user.setFirstname(userTmp.getFirstname());
 		user.setLastname(userTmp.getLastname());
-		user.setAdmin(userTmp.isAdmin());
+		if (appUserSession.getConnectedUser().isAdmin())
+				user.setAdmin(userTmp.getAdminString().equals("true"));
 		user.setPassword(userTmp.getPassword());
 		try {
 			appUserService.edit(user);

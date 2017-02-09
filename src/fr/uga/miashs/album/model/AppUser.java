@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -34,9 +35,6 @@ import fr.uga.miashs.album.control.AppUserSession;
 public class AppUser implements Serializable {
 
 	private static final long serialVersionUID = 6859900262663311670L;
-
-	@Inject
-	private AppUserSession appUserSession;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,11 +62,15 @@ public class AppUser implements Serializable {
 	@NotNull
 	private boolean admin;
 
+	@Transient
+	private String adminString;
+
 	@NotNull
 	@Temporal(TemporalType.TIME)
 	private Calendar dateCreated;
 
 	public AppUser() {
+		this.adminString=String.valueOf(admin);
 	}
 
 	public long getId() {
@@ -116,14 +118,15 @@ public class AppUser implements Serializable {
 	}
 
 	public void setAdmin(boolean admin) {
-		if (appUserSession != null
-				&& appUserSession.getConnectedUser() != null
-				&& !appUserSession.getConnectedUser().isAdmin()) {
-			throw new SecurityException("An unauthorized user have tried to grant his privileges");
-		}
-		else if (appUserSession != null
-				&& appUserSession.getConnectedUser() != null)
-			this.admin = admin;
+		this.admin = admin;
+	}
+
+	public String getAdminString() {
+		return adminString;
+	}
+
+	public void setAdminString(String adminString) {
+		this.adminString = adminString;
 	}
 
 	public Calendar getDateCreated() {

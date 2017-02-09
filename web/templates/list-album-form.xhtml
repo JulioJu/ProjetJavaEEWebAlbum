@@ -26,6 +26,17 @@
                         <f:facet name="header">Creation time</f:facet>
                         <h:outputText value="#{alb.dateCreated.getTime()}" />
                     </h:column>
+                    <h:column>
+                        <h:commandLink action="#{albumController.viewPictureByAlbum(alb.id)}" value="show"  />
+                    </h:column>
+                        <h:column>
+                            <h:link outcome="#{Pages.edit_album}" value="edit" >
+                                <f:param name="albumId" value="#{alb.id}" />
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
+                        </h:column>
 </ui:composition>
 </body>
 </html>

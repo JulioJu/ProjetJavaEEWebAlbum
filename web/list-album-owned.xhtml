@@ -27,17 +27,6 @@
                             <f:selectItems value="#{alb.getSharedWith()}" var="user" itemValue="#{user.id}" itemLabel="id:#{user.id}"  />
                         </h:selectManyListbox>
                     </h:column>
-                    <h:column>
-                        <h:commandLink action="#{albumController.viewPictureByAlbum(alb.id)}" value="show"  />
-                    </h:column>
-                    <h:column>
-                        <h:link outcome="#{Pages.edit_album}" value="edit" >
-                            <f:param name="albumId" value="#{alb.id}" />
-                        </h:link>
-                    </h:column>
-                    <h:column>
-                        <h:commandLink action="#{albumController.delete(alb.id)}" value="delete"/>
-                    </h:column>
                 </h:dataTable>
             <!-- \h:form -->
             </h:form>
