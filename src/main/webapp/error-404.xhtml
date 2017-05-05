@@ -38,10 +38,10 @@
             Error 404: Not found.
 
             <p id="picturesFolder">
-                <h:outputText rendered="#{appUserSession==null or appUserSession.getConnectedUser()==null}"
+                <h:outputText rendered="#{appUserSession==null or appUserSession.connectedUser==null}"
                         value="You cannot access to folder pictures ('&#47;pictures')
                         without being connected" />
-                <h:outputText rendered="#{appUserSession!=null and appUserSession.getConnectedUser()!=null}"
+                <h:outputText rendered="#{appUserSession!=null and appUserSession.connectedUser!=null}"
                         value="You're in folder '&#47;pictures',
                     either the picture doesn't exist,
                     either the owner havn't shared this picture with you." />

@@ -78,13 +78,16 @@ See informations in FilterPage.java
 * Inform exceptions in Facelet view
 * Manage JpaService.read(key) issues (key not found in database)
 * Test if client send good POST values
-* Make a custom header for edit-album.xhtml (all link should end conversation), or try with ReachFaces ([see also](http://stackoverflow.com/questions/9983904/is-there-a-way-to-call-a-method-upon-leaving-a-page-with-jsf-or-primefaces))
-* See strange bug (fixed) in PictureService.java (see comment). Is it only with tomee ?
+* ~~Make a custom header for edit-album.xhtml (all link should end conversation), or try with ReachFaces ([see also](http://stackoverflow.com/questions/9983904/is-there-a-way-to-call-a-method-upon-leaving-a-page-with-jsf-or-primefaces) (but ReachFaces is not yes supported))~~
+
+* See strange bug (fixed) in PictureService.java (see comment in this file). Is it only with tomee ?
 * Ask confirmation before perform an action (in JavaScript)
 * Remove Omnifaces and change Pages interface to an CDI bean (issues, could not
         be injected in all classes)
 * Move templates in WEB-INF, and access it with CDI bean Pages
 * Put bootstrap col in template
+* Try https://jsflive.wordpress.com/2013/07/17/jsf22-cdi-view-scope/ (replace ConversationScoped)
+* Resolve this anti-patern « The session-per-application is also considered an anti-pattern. The Hibernate Session, like the JPA EntityManager, is not a thread-safe object and it is intended to be confined to a single thread at once. If the Session is shared among multiple threads, there will be race conditions as well as visibility issues , so beware of this. » https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#PoEAA
 
 ## Know issues
 * When there is more than 10 pictures in Database :
@@ -94,13 +97,21 @@ Multiple concurrent threads attempted to access a single broker. By default brok
 Caused by:
 org.apache.openjpa.persistence.PersistenceException - Multiple concurrent threads attempted to access a single broker. By default brokers are not thread safe; if you require and/or intend a broker to be accessed by more than one thread, set the openjpa.Multithreaded property to true to override the default behavior.  at org.apache.openjpa.kernel.BrokerImpl.endOperation(BrokerImpl.java:1987)
 ```
-=> Maybe, configure better Database, and use Hibernate + Mysql (Derby is not thread safe)
+=> Maybe, configure better Database, and use Hibernate + Mysql
 * Sometimes, even we refres, deconnect, reconnect, an picture not inserted is no displayed
 ==> restart TomEE for fix this issue.
 
 # Info
 * Info : only admin or owner can delete or change album or picture. Delete link do nothing, and edit link send 403 error.
 
+# Postgresql + Wildfly
+
+https://tomylab.wordpress.com/2016/07/24/how-to-add-a-datasource-to-wildfly/ :
+```
+module add --name=org.postgresql --resources=~/workspace/postgresql-9.4.1212.jre7.jar --dependencies=javax.api,javax.transaction.api
+See cmd in https://github.com/wildfly/quickstart/blob/11.x/configure-postgresql.cli
+data-source add --jndi-name=java:jboss/datasources/EssaiJPA --name=EssaiJPA --connection-url=jdbc:postgresql://localhost/albumDS --driver-name=postgresql --user-name=postgres
+```
 
 <!-- vim: sw=4 ts=4 et:
 -->
