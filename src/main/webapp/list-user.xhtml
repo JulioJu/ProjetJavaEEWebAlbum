@@ -44,7 +44,7 @@
             <!-- h:form -->
             <h:form>
 
-                <h:dataTable styleClass="table table-condensed" value="#{appUserService.listUsers()}" var="user">
+                <h:dataTable styleClass="table table-condensed" value="#{appUserController.listUsers()}" var="user">
                     <h:column>
                         <f:facet name="header">User id</f:facet>
                         <h:outputText value="#{user.id}" />

@@ -1,9 +1,11 @@
 package fr.uga.miashs.album.service;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -11,9 +13,9 @@ import javax.persistence.RollbackException;
 
 import fr.uga.miashs.album.model.AppUser;
 
-@Named
-@ApplicationScoped
-public class AppUserService extends JpaService<Long,AppUser> {
+@Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+public class AppUserService extends JpaService<Long,AppUser> implements Serializable {
 
 	private static final long serialVersionUID = 3975934852005119859L;
 
@@ -57,9 +59,10 @@ public class AppUserService extends JpaService<Long,AppUser> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<AppUser> listUsers() throws ServiceException {
-		 Query query = getEm().createNamedQuery("AppUser.findAll");
-		 return query.getResultList();
+		Query query = getEm().createNamedQuery("AppUser.findAll");
+		return query.getResultList();
 	}
 }
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.activation.MimetypesFileTypeMap;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.Query;
 
@@ -14,6 +14,7 @@ import fr.uga.miashs.album.model.Picture;
 import fr.uga.miashs.album.util.IOUtilsCust;
 
 
+@Stateless
 public class PictureService extends JpaService<Long,Picture> {
 
     private static final long serialVersionUID = 8759786961691423964L;
@@ -22,6 +23,7 @@ public class PictureService extends JpaService<Long,Picture> {
 
     // @BUG from tomee. With edit-picture.xhtml, this method is executed
     // even if this.setField(p) is commented in edit(Picture) methodd
+    // Probably fixed, method JpaService.java/edit{} must extend JpaService.java/upload{} and not JpaService.java/create, but it's stranged that a private method is accessed from another class
     private void setField(Picture p) throws ServiceException {
         // Or with File.io (older) see for example http://javabydeveloper.com/save-image-working-large-objects/
         // Image size must be smaller than 2 GB with Files.readAllBytes(Path)

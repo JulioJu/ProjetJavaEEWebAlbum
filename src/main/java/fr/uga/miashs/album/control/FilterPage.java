@@ -76,8 +76,8 @@ public class FilterPage implements Filter {
     boolean alreadyCommited = false;
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
-    String requestedUri = ((HttpServletRequest) request).getRequestURI()
-        .substring(((HttpServletRequest) request).getContextPath().length()+1);
+    String requestedUri = request.getRequestURI()
+        .substring(request.getContextPath().length()+1);
 
     // @TODO
     // Filter paramet cid, and call AlbumController.endConversation()

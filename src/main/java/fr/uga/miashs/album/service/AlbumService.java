@@ -3,6 +3,7 @@ package fr.uga.miashs.album.service;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.Query;
 
@@ -11,6 +12,7 @@ import fr.uga.miashs.album.model.Album;
 import fr.uga.miashs.album.model.AppUser;
 
 
+@Stateless
 public class AlbumService extends JpaService<Long,Album> {
 
 	private static final long serialVersionUID = -2061392070773108977L;

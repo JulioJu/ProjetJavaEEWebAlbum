@@ -19,6 +19,14 @@ import fr.uga.miashs.album.util.Pages;
  * @author jdavid
  *
  */
+/*
+ * On a choisi ApplicationScoped car une seule instance de chaque service suffit à l'application
+ * Ce choix de reporte sur toute les sous classes
+ * Si on ne met rien @RequestScoped est choisi par défaut
+ * ==> @TODO say to teacher : wrong :
+ * https://docs.oracle.com/javaee/7/tutorial/cdi-basic008.htm
+ * Default scope is Dependent
+ */
 @Named
 @SessionScoped
 public class AppUserSession implements Serializable {

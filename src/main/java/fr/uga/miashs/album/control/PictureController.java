@@ -67,7 +67,7 @@ public class PictureController {
 
     public String create() {
         FacesContext ctx = FacesContext.getCurrentInstance();
-        String idString = (String) ctx.getExternalContext().
+        String idString = ctx.getExternalContext().
                 getRequestParameterMap().get("albumId");
         Long albumIdRetrieveFromView;
         if (idString != null && !idString.isEmpty()) {
@@ -117,7 +117,7 @@ public class PictureController {
             // TODO
             throw new RuntimeException("You have passed wrong parameters");
         }
-        String fromPage = (String) ctx.getExternalContext().
+        String fromPage = ctx.getExternalContext().
                 getRequestParameterMap().get("fromPage");
         // TODO not RuntimeException, but info
         if (!fromPage.equals(Pages.list_picture_owned)

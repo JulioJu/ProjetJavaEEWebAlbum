@@ -1,5 +1,7 @@
 package fr.uga.miashs.album.control;
 
+import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -113,6 +115,10 @@ public class AppUserController {
 		if (!this.isAllowedModify())
 			return Pages.error_403;
 		return Pages.list_user;
+	}
+
+	public List<AppUser> listUsers() throws ServiceException {
+		return appUserService.listUsers();
 	}
 
 }

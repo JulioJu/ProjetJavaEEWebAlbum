@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+    <!-- See http://tomee.apache.org/datasource-config.html -->
+    <!-- see http://tomee.apache.org/containers&#45;and&#45;resources.html -->
+    <!--  -->
+    <!-- activate next line to be able to deploy applications in apps -->
+    <!-- <Deployments dir="apps" /> -->
+    <Resource id="albumDS" type="DataSource">
+        JdbcDriver org.apache.derby.jdbc.EmbeddedDriver
+        JdbcUrl jdbc:derby:/home/julioprayer/workspace/DBJavaEEProjetAlbumJu;create=true
+        JtaManaged=true
+    </Resource>
+</tomee>
